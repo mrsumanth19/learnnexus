@@ -26,14 +26,14 @@ chat = model.start_chat(history=[])
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = 587
 app.config['MAIL_USE_TLS'] = True
-app.config['MAIL_USERNAME'] = 'info.learnnexus@gmail.com'
-app.config['MAIL_PASSWORD'] = 'vdskhazcxtxbhdvb'  # use 16-char app password
+app.config['MAIL_USERNAME'] = 'your user mail id'
+app.config['MAIL_PASSWORD'] = 'your 16 char app password'  # use 16-char app password
 mail = Mail(app)
 
 # Twilio Configuration
-TWILIO_ACCOUNT_SID = 'AC7b51bab5d2fdf6036a0c6991c6b77153'
-TWILIO_AUTH_TOKEN = '8f7235641d8187d846ff21e53bf24662'
-TWILIO_PHONE_NUMBER = '+16089038159'  # your Twilio phone number
+TWILIO_ACCOUNT_SID = 'your_account_sid'
+TWILIO_AUTH_TOKEN = 'your_auth_token'
+TWILIO_PHONE_NUMBER = '+your Twilio phone number'  # your Twilio phone number
 twilio_client = Client(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN)
 
 
@@ -43,7 +43,7 @@ def get_db_connection():
         connection = mysql.connector.connect(
             host="localhost",
             user="root",
-            password="sumanth",  # Your MySQL password
+            password="Your MySQL password",  # Your MySQL password
             database="learnnexus"
         )
         return connection
