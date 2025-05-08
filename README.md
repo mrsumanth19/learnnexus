@@ -1,4 +1,4 @@
-# learnnexus:an ai powered colloborative learning platform
+# LEARNNEXUS: AN AI-POWERED COLLOBORATIVE LEARNING PLATFORM
 LearnNexus is an online platform designed for students to share study materials, get real-time updates, and receive AI-powered assistance. With secure file sharing and campus event features, LearnNexus enhances collaboration and learning across academic communities.
 
 Features
