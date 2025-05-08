@@ -17,7 +17,7 @@ app.secret_key = os.urandom(24).hex()  # Secret key for session management
 app.permanent_session_lifetime = timedelta(days=7)  # Session lasts for 7 days
 
 # Gemini AI Configuration
-GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY", "AIzaSyAcEyAuAfHjgMHKrNu-GFHR8fLN46xNwYo")
+GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY", "Your_google_api_key")
 genai.configure(api_key=GOOGLE_API_KEY)
 model = genai.GenerativeModel('gemini-1.5-flash')
 chat = model.start_chat(history=[])
