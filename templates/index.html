@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LearnNexus</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+            transition: all 0.3s ease;
+        }
+
+        :root {
+            --primary-color: #2563eb;
+            --primary-dark: #1e4bb5;
+            --gray-100: #f3f4f6;
+            --gray-200: #e5e7eb;
+            --gray-300: #d1d5db;
+            --gray-600: #4b5563;
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.1);
+            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            background-color: var(--gray-100);
+            color: var(--gray-600);
+        }
+
+        /* Navigation */
+        .navbar {
+            background: white;
+            padding: 1rem 2rem;
+            border-bottom: 1px solid var(--gray-200);
+            box-shadow: var(--shadow-sm);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .search-container {
+            flex: 1;
+            max-width: 600px;
+            margin: 0 2rem;
+            position: relative;
+        }
+
+        .search-container i {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray-600);
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 0.75rem 1rem 0.75rem 2.5rem;
+            border: 1px solid var(--gray-200);
+            border-radius: 0.5rem;
+            outline: none;
+            font-size: 0.875rem;
+        }
+
+        .search-input:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            cursor: pointer;
+            border: none;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-ghost {
+            background-color: transparent;
+            color: var(--gray-600);
+        }
+
+        .btn-ghost:hover {
+            background-color: var(--gray-200);
+        }
+        
+        /* Logout Button */
+        .logout-btn {
+            background-color: transparent;
+            color: var(--gray-600);
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            cursor: pointer;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            border: 1px solid var(--gray-300);
+        }
+        
+        .logout-btn:hover {
+            background-color: #f8f9fa;
+            color: #dc2626;
+        }
+        
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+            color: var(--gray-600);
+        }
+        
+        .user-avatar {
+            width: 2rem;
+            height: 2rem;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        /* Main Content */
+        .main-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: 250px 1fr 300px;
+            gap: 2rem;
+        }
+
+        @media (max-width: 1024px) {
+            .main-container {
+                grid-template-columns: 1fr;
+            }
+            .sidebar, .events-sidebar {
+                display: none;
+            }
+            .mobile-menu {
+                display: block;
+            }
+        }
+
+        /* Sidebar */
+        .sidebar {
+            position: sticky;
+            top: 5rem;
+            height: calc(100vh - 5rem);
+            overflow-y: auto;
+            padding-bottom: 2rem;
+        }
+
+        .sidebar-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1rem;
+            color: var(--gray-600);
+            text-decoration: none;
+            border-radius: 0.375rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .sidebar-item:hover {
+            background-color: var(--gray-200);
+            transform: translateX(5px);
+        }
+
+        .sidebar-item.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .sidebar-item.active i {
+            color: white;
+        }
+
+        /* Mobile Menu */
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            box-shadow: 0 -1px 5px rgba(0, 0, 0, 0.1);
+            z-index: 100;
+        }
+
+        .mobile-menu-items {
+            display: flex;
+            justify-content: space-around;
+            padding: 0.75rem 0;
+        }
+
+        .mobile-menu-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.25rem;
+            color: var(--gray-600);
+            text-decoration: none;
+            font-size: 0.75rem;
+        }
+
+        .mobile-menu-item i {
+            font-size: 1.25rem;
+        }
+
+        .mobile-menu-item.active {
+            color: var(--primary-color);
+        }
+
+        /* Cards */
+        .card {
+            background: white;
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--gray-200);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            color: var(--gray-600);
+        }
+
+        .question-input {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .question-input input {
+            flex: 1;
+            padding: 0.75rem;
+            border: 1px solid var(--gray-200);
+            border-radius: 0.375rem;
+            outline: none;
+        }
+
+        .question-input input:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        /* Trending Questions */
+        .question-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 1rem;
+            border-bottom: 1px solid var(--gray-200);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .question-item:hover {
+            background-color: var(--gray-100);
+            transform: translateX(5px);
+        }
+
+        .question-stats {
+            display: flex;
+            gap: 1rem;
+            color: var(--gray-600);
+            font-size: 0.875rem;
+        }
+
+        /* Events */
+        .event-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--gray-200);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .event-item:hover {
+            background-color: var(--gray-100);
+            transform: translateX(5px);
+        }
+
+        .event-info h3 {
+            font-size: 0.875rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .event-time {
+            color: var(--gray-600);
+            font-size: 0.75rem;
+        }
+
+        .event-members {
+            color: var(--gray-600);
+            font-size: 0.75rem;
+        }
+
+        /* Animations */
+        .animate-pop {
+            animation: pop 0.3s ease;
+        }
+
+        @keyframes pop {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-content">
+            <div class="logo">
+                <i class="fas fa-chevron-left"></i>
+                LearnNexus
+            </div>
+            <div class="search-container">
+                <i class="fas fa-search"></i>
+                <input type="text" class="search-input" placeholder="Search for topics, questions, or materials...">
+            </div>
+            <div class="nav-actions">
+                <div class="user-info" id="user-info">
+                    <div class="user-avatar" id="user-avatar"></div>
+                    <span id="user-name"></span>
+                </div>
+                <a href="/logout" class="logout-btn" id="logout-btn">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="main-container">
+        <!-- Left Sidebar -->
+        <div class="sidebar">
+            <a href="/campus_events" class="sidebar-item">
+                <i class="fas fa-calendar-alt"></i>
+                Advertise & events
+            </a>
+            <a href="/roadmap" class="sidebar-item">
+                <i class="fas fa-map"></i> <!-- Change the icon here -->
+                Roadmap
+            </a>
+            
+            <a href="#" class="sidebar-item">
+                <i class="fas fa-comments"></i>
+                Q&A
+            </a>
+            <a href="/upload" class="sidebar-item">
+                <i class="fas fa-upload"></i> <!-- Change the icon here -->
+                upload & download
+            </a>
+            
+            <a href="/textgpt" class="sidebar-item">
+                <i class="fas fa-robot"></i>
+                TextGPT
+            </a>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- AI Assistant Card -->
+            <div class="card animate-pop">
+                <img src="{{ url_for('static', filename='images/undraw_online-learning_tgmv.png') }}" alt="AI Learning" style="width: 100%; height: auto; display: block; margin: 0 auto;">
+                <h2 class="card-title">AI Learning Assistant</h2>
+                <p>Ask me anything about your studies!</p>
+                <div class="question-input">
+                    <input type="text" placeholder="Type your question here...">
+                    <button class="btn btn-primary">Ask</button>
+                </div>
+            </div>
+
+            <!-- Trending Questions -->
+            <div class="card animate-pop">
+                <h2 class="card-title">Trending Questions</h2>
+                <div id="trending-questions">
+                    <!-- Questions will be added here by JavaScript -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Sidebar - Events -->
+        <div class="events-sidebar">
+            <div class="card animate-pop">
+                <h2 class="card-title">Upcoming Events</h2>
+                <div id="upcoming-events">
+                    <!-- Events will be added here by JavaScript -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu">
+        <div class="mobile-menu-items">
+            <a href="#" class="mobile-menu-item">
+                <i class="fas fa-home"></i>
+                Home
+            </a>
+            <a href="#" class="mobile-menu-item">
+                <i class="fas fa-book"></i>
+                Study
+            </a>
+            <a href="#" class="mobile-menu-item">
+                <i class="fas fa-bell"></i>
+                Notifications
+            </a>
+            <a href="#" class="mobile-menu-item">
+                <i class="fas fa-user"></i>
+                Profile
+            </a>
+            <a href="/logout" class="mobile-menu-item">
+                <i class="fas fa-sign-out-alt"></i>
+                Logout
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // Sample data
+        const trendingQuestions = [
+            { title: "How to implement Binary Search Tree?", votes: 45, answers: 8 },
+            { title: "Best practices for React Hooks?", votes: 38, answers: 12 },
+            { title: "Understanding Big O Notation", votes: 32, answers: 6 }
+        ];
+
+        const upcomingEvents = [
+            { title: "Group Study: Advanced Algorithms", time: "2:00 PM", members: 5 },
+            { title: "Machine Learning Workshop", time: "4:30 PM", members: 12 },
+            { title: "Project Discussion", time: "6:00 PM", members: 3 }
+        ];
+
+        // Populate trending questions
+        const questionsContainer = document.getElementById('trending-questions');
+        trendingQuestions.forEach(question => {
+            const questionElement = document.createElement('div');
+            questionElement.className = 'question-item';
+            questionElement.innerHTML = `
+                <div class="question-title">${question.title}</div>
+                <div class="question-stats">
+                    <span>${question.votes} votes</span>
+                    <span>${question.answers} answers</span>
+                </div>
+            `;
+            questionsContainer.appendChild(questionElement);
+        });
+
+        // Populate upcoming events
+        const eventsContainer = document.getElementById('upcoming-events');
+        upcomingEvents.forEach(event => {
+            const eventElement = document.createElement('div');
+            eventElement.className = 'event-item';
+            eventElement.innerHTML = `
+                <div class="event-info">
+                    <h3>${event.title}</h3>
+                    <div class="event-time">${event.time}</div>
+                </div>
+                <div class="event-members">${event.members} members</div>
+            `;
+            eventsContainer.appendChild(eventElement);
+        });
+
+        // Add hover animations
+        document.querySelectorAll('.card, .question-item, .event-item').forEach(item => {
+            item.addEventListener('mouseenter', () => {
+                item.classList.add('animate-pop');
+            });
+            item.addEventListener('mouseleave', () => {
+                item.classList.remove('animate-pop');
+            });
+        });
+        
+        // Check if user is logged in and display user info
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get user info from session if available
+            // This would be populated from your Flask session data
+            const userData = {
+                name: "{{ session.get('user_name', '') }}",
+                email: "{{ session.get('user_email', '') }}"
+            };
+            
+            const userAvatar = document.getElementById('user-avatar');
+            const userName = document.getElementById('user-name');
+            const userInfo = document.getElementById('user-info');
+            const logoutBtn = document.getElementById('logout-btn');
+            
+            // If user is logged in (check via JavaScript since this is a template)
+            if (userData.name) {
+                // Display user info
+                userName.textContent = userData.name;
+                // Create initials for avatar
+                if (userData.name) {
+                    const initials = userData.name.split(' ')
+                                    .map(name => name.charAt(0))
+                                    .join('').toUpperCase();
+                    userAvatar.textContent = initials;
+                }
+                
+                // Show logout button
+                logoutBtn.style.display = 'flex';
+                userInfo.style.display = 'flex';
+            } else {
+                // Hide user info and show login/register instead
+                userInfo.style.display = 'none';
+                logoutBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Login';
+                logoutBtn.href = '/login';
+            }
+            
+            // Confirm before logout (optional)
+            logoutBtn.addEventListener('click', function(e) {
+                if (userData.name) {  // Only confirm if user is logged in
+                    if (!confirm('Are you sure you want to logout?')) {
+                        e.preventDefault();
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

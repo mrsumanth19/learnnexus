@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Full Stack Developer Roadmap Tracker</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            color: #333;
+            background-color: #f5f9fc;
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #2980b9;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #2980b9;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+        h3 {
+            color: #3498db;
+            margin-top: 20px;
+        }
+        .section {
+            background-color: white;
+            border-radius: 8px;
+            padding: 15px 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            border-left: 5px solid #2980b9;
+        }
+        .topic-group {
+            margin-left: 15px;
+        }
+        .topic {
+            display: flex;
+            align-items: center;
+            margin: 8px 0;
+        }
+        .topic label {
+            margin-left: 8px;
+            cursor: pointer;
+            flex: 1;
+        }
+        input[type="checkbox"] {
+            transform: scale(1.2);
+            cursor: pointer;
+        }
+        .progress-container {
+            background-color: #eee;
+            border-radius: 20px;
+            height: 20px;
+            width: 100%;
+            margin: 20px 0;
+            position: relative;
+        }
+        .progress-bar {
+            background-color: #2980b9;
+            height: 100%;
+            border-radius: 20px;
+            width: 0%;
+            transition: width 0.3s ease-in-out;
+        }
+        .progress-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #333;
+            font-weight: bold;
+            text-shadow: 0 0 3px rgba(255, 255, 255, 0.5);
+        }
+        .summary {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+        .stats {
+            background-color: white;
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            flex: 1;
+            margin: 0 10px;
+            text-align: center;
+            border-bottom: 3px solid #2980b9;
+        }
+        .stats h3 {
+            margin-top: 0;
+            color: #2c3e50;
+        }
+        .stats p {
+            font-size: 24px;
+            font-weight: bold;
+            color: #2980b9;
+            margin: 10px 0 0;
+        }
+        .footer {
+            margin-top: 30px;
+            text-align: center;
+            color: #7f8c8d;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <h1>Full Stack Developer Roadmap Tracker</h1>
+    
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+        <div class="progress-text" id="progressText">0%</div>
+    </div>
+    
+    <div class="summary">
+        <div class="stats">
+            <h3>Total Topics</h3>
+            <p id="totalTopics">0</p>
+        </div>
+        <div class="stats">
+            <h3>Completed</h3>
+            <p id="completedTopics">0</p>
+        </div>
+        <div class="stats">
+            <h3>Remaining</h3>
+            <p id="remainingTopics">0</p>
+        </div>
+    </div>
+
+    <div id="roadmap">
+        <!-- Section 1: Programming Fundamentals -->
+        <div class="section">
+            <h2>1. Programming Fundamentals</h2>
+            <div class="topic-group">
+                <div class="topic">
+                    <input type="checkbox" id="topic1" class="topic-checkbox">
+                    <label for="topic1">Basic programming concepts (variables, data types, loops, conditions)</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic2" class="topic-checkbox">
+                    <label for="topic2">Problem-solving and algorithms</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic3" class="topic-checkbox">
+                    <label for="topic3">Data structures (arrays, objects, lists, stacks, queues)</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic4" class="topic-checkbox">
+                    <label for="topic4">Object-oriented programming concepts</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic5" class="topic-checkbox">
+                    <label for="topic5">Version control with Git</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic6" class="topic-checkbox">
+                    <label for="topic6">GitHub/GitLab workflow</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic7" class="topic-checkbox">
+                    <label for="topic7">Command line basics</label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 2: Front-End Fundamentals -->
+        <div class="section">
+            <h2>2. Front-End Fundamentals</h2>
+            <div class="topic-group">
+                <div class="topic">
+                    <input type="checkbox" id="topic8" class="topic-checkbox">
+                    <label for="topic8">HTML5 semantic markup</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic9" class="topic-checkbox">
+                    <label for="topic9">CSS3 styling and layouts</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic10" class="topic-checkbox">
+                    <label for="topic10">CSS Flexbox</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic11" class="topic-checkbox">
+                    <label for="topic11">CSS Grid</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic12" class="topic-checkbox">
+                    <label for="topic12">Responsive web design</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic13" class="topic-checkbox">
+                    <label for="topic13">CSS preprocessors (SASS/SCSS)</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic14" class="topic-checkbox">
+                    <label for="topic14">CSS frameworks (Bootstrap, Tailwind, etc.)</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic15" class="topic-checkbox">
+                    <label for="topic15">Browser developer tools</label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 3: JavaScript -->
+        <div class="section">
+            <h2>3. JavaScript</h2>
+            <div class="topic-group">
+                <div class="topic">
+                    <input type="checkbox" id="topic16" class="topic-checkbox">
+                    <label for="topic16">JavaScript fundamentals and syntax</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic17" class="topic-checkbox">
+                    <label for="topic17">DOM manipulation</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic18" class="topic-checkbox">
+                    <label for="topic18">Events and event handling</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic19" class="topic-checkbox">
+                    <label for="topic19">ES6+ features (arrow functions, destructuring, etc.)</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic20" class="topic-checkbox">
+                    <label for="topic20">Asynchronous JavaScript (Promises, async/await)</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic21" class="topic-checkbox">
+                    <label for="topic21">Fetch API and AJAX</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic22" class="topic-checkbox">
+                    <label for="topic22">JSON manipulation</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic23" class="topic-checkbox">
+                    <label for="topic23">Error handling</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic24" class="topic-checkbox">
+                    <label for="topic24">Local storage and session storage</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic25" class="topic-checkbox">
+                    <label for="topic25">JavaScript modules</label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 4: Front-End Frameworks -->
+        <div class="section">
+            <h2>4. Front-End Frameworks</h2>
+            <div class="topic-group">
+                <div class="topic">
+                    <input type="checkbox" id="topic26" class="topic-checkbox">
+                    <label for="topic26">Modern JavaScript build tools (Webpack, Vite, etc.)</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic27" class="topic-checkbox">
+                    <label for="topic27">Package managers (npm, yarn)</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic28" class="topic-checkbox">
+                    <label for="topic28">React.js fundamentals</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic29" class="topic-checkbox">
+                    <label for="topic29">React hooks</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic30" class="topic-checkbox">
+                    <label for="topic30">React router</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic31" class="topic-checkbox">
+                    <label for="topic31">State management (Context API, Redux)</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic32" class="topic-checkbox">
+                    <label for="topic32">Alternative frameworks (Angular/Vue.js) (optional)</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic33" class="topic-checkbox">
+                    <label for="topic33">TypeScript basics</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic34" class="topic-checkbox">
+                    <label for="topic34">Server-side rendering (Next.js/Nuxt.js)</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic35" class="topic-checkbox">
+                    <label for="topic35">Static site generators (Gatsby, Astro, etc.)</label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 5: Back-End Fundamentals -->
+        <div class="section">
+            <h2>5. Back-End Fundamentals</h2>
+            <div class="topic-group">
+                <div class="topic">
+                    <input type="checkbox" id="topic36" class="topic-checkbox">
+                    <label for="topic36">Internet and web architecture</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic37" class="topic-checkbox">
+                    <label for="topic37">HTTP/HTTPS protocols</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic38" class="topic-checkbox">
+                    <label for="topic38">RESTful API concepts</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic39" class="topic-checkbox">
+                    <label for="topic39">API design principles</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic40" class="topic-checkbox">
+                    <label for="topic40">CRUD operations</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic41" class="topic-checkbox">
+                    <label for="topic41">MVC architecture</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic42" class="topic-checkbox">
+                    <label for="topic42">Authentication and authorization concepts</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic43" class="topic-checkbox">
+                    <label for="topic43">Web security basics (CORS, XSS, CSRF)</label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 6: Back-End Languages & Frameworks -->
+        <div class="section">
+            <h2>6. Back-End Languages & Frameworks</h2>
+            <div class="topic-group">
+                <h3>Choose at least one stack:</h3>
+                <div class="topic">
+                    <input type="checkbox" id="topic44" class="topic-checkbox">
+                    <label for="topic44">Node.js fundamentals</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic45" class="topic-checkbox">
+                    <label for="topic45">Express.js framework</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic46" class="topic-checkbox">
+                    <label for="topic46">Python basics</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic47" class="topic-checkbox">
+                    <label for="topic47">Django or Flask framework</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic48" class="topic-checkbox">
+                    <label for="topic48">Ruby basics</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic49" class="topic-checkbox">
+                    <label for="topic49">Ruby on Rails framework</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic50" class="topic-checkbox">
+                    <label for="topic50">Java basics</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic51" class="topic-checkbox">
+                    <label for="topic51">Spring Boot framework</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic52" class="topic-checkbox">
+                    <label for="topic52">PHP basics</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic53" class="topic-checkbox">
+                    <label for="topic53">Laravel or Symfony framework</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic54" class="topic-checkbox">
+                    <label for="topic54">.NET Core basics</label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 7: Databases -->
+        <div class="section">
+            <h2>7. Databases</h2>
+            <div class="topic-group">
+                <div class="topic">
+                    <input type="checkbox" id="topic55" class="topic-checkbox">
+                    <label for="topic55">Database fundamentals and design</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic56" class="topic-checkbox">
+                    <label for="topic56">SQL basics</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic57" class="topic-checkbox">
+                    <label for="topic57">Relational databases (MySQL, PostgreSQL, etc.)</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic58" class="topic-checkbox">
+                    <label for="topic58">NoSQL databases (MongoDB, Firebase, etc.)</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic59" class="topic-checkbox">
+                    <label for="topic59">Database relationships (one-to-one, one-to-many, many-to-many)</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic60" class="topic-checkbox">
+                    <label for="topic60">ORM/ODM (Sequelize, Mongoose, etc.)</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic61" class="topic-checkbox">
+                    <label for="topic61">Database indexing and optimization</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic62" class="topic-checkbox">
+                    <label for="topic62">Database migrations</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic63" class="topic-checkbox">
+                    <label for="topic63">Data validation and sanitization</label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 8: API Development -->
+        <div class="section">
+            <h2>8. API Development</h2>
+            <div class="topic-group">
+                <div class="topic">
+                    <input type="checkbox" id="topic64" class="topic-checkbox">
+                    <label for="topic64">RESTful API implementation</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic65" class="topic-checkbox">
+                    <label for="topic65">GraphQL basics</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic66" class="topic-checkbox">
+                    <label for="topic66">API authentication (JWT, OAuth)</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic67" class="topic-checkbox">
+                    <label for="topic67">API testing and documentation</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic68" class="topic-checkbox">
+                    <label for="topic68">API versioning</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic69" class="topic-checkbox">
+                    <label for="topic69">Rate limiting and API security</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic70" class="topic-checkbox">
+                    <label for="topic70">Server-sent events and WebSockets</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic71" class="topic-checkbox">
+                    <label for="topic71">Microservices architecture (optional)</label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 9: DevOps & Deployment -->
+        <div class="section">
+            <h2>9. DevOps & Deployment</h2>
+            <div class="topic-group">
+                <div class="topic">
+                    <input type="checkbox" id="topic72" class="topic-checkbox">
+                    <label for="topic72">Web servers (Nginx, Apache)</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic73" class="topic-checkbox">
+                    <label for="topic73">Environment variables and configuration</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic74" class="topic-checkbox">
+                    <label for="topic74">Deployment strategies</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic75" class="topic-checkbox">
+                    <label for="topic75">CI/CD pipelines</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic76" class="topic-checkbox">
+                    <label for="topic76">Containerization with Docker</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic77" class="topic-checkbox">
+                    <label for="topic77">Container orchestration with Kubernetes (optional)</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic78" class="topic-checkbox">
+                    <label for="topic78">Cloud services (AWS, Azure, GCP)</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic79" class="topic-checkbox">
+                    <label for="topic79">Serverless architecture</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic80" class="topic-checkbox">
+                    <label for="topic80">Monitoring and logging</label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 10: Testing -->
+        <div class="section">
+            <h2>10. Testing</h2>
+            <div class="topic-group">
+                <div class="topic">
+                    <input type="checkbox" id="topic81" class="topic-checkbox">
+                    <label for="topic81">Testing fundamentals</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic82" class="topic-checkbox">
+                    <label for="topic82">Unit testing</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic83" class="topic-checkbox">
+                    <label for="topic83">Integration testing</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic84" class="topic-checkbox">
+                    <label for="topic84">End-to-end testing</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic85" class="topic-checkbox">
+                    <label for="topic85">Test-driven development (TDD)</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic86" class="topic-checkbox">
+                    <label for="topic86">Front-end testing tools (Jest, React Testing Library, etc.)</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic87" class="topic-checkbox">
+                    <label for="topic87">Back-end testing tools (Mocha, Chai, Pytest, etc.)</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic88" class="topic-checkbox">
+                    <label for="topic88">API testing tools (Postman, Insomnia)</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic89" class="topic-checkbox">
+                    <label for="topic89">Mocking and stubbing</label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 11: Performance & Optimization -->
+        <div class="section">
+            <h2>11. Performance & Optimization</h2>
+            <div class="topic-group">
+                <div class="topic">
+                    <input type="checkbox" id="topic90" class="topic-checkbox">
+                    <label for="topic90">Web performance metrics</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic91" class="topic-checkbox">
+                    <label for="topic91">Front-end optimization techniques</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic92" class="topic-checkbox">
+                    <label for="topic92">Asset optimization (images, fonts, etc.)</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic93" class="topic-checkbox">
+                    <label for="topic93">Lazy loading and code splitting</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic94" class="topic-checkbox">
+                    <label for="topic94">Caching strategies</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic95" class="topic-checkbox">
+                    <label for="topic95">Back-end optimization</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic96" class="topic-checkbox">
+                    <label for="topic96">Database query optimization</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic97" class="topic-checkbox">
+                    <label for="topic97">Memory management</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic98" class="topic-checkbox">
+                    <label for="topic98">Load balancing</label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 12: Professional Skills -->
+        <div class="section">
+            <h2>12. Professional Skills</h2>
+            <div class="topic-group">
+                <div class="topic">
+                    <input type="checkbox" id="topic99" class="topic-checkbox">
+                    <label for="topic99">Clean code principles</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic100" class="topic-checkbox">
+                    <label for="topic100">Code reviews</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic101" class="topic-checkbox">
+                    <label for="topic101">Agile development methodologies</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic102" class="topic-checkbox">
+                    <label for="topic102">Project management tools (Jira, Trello, etc.)</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic103" class="topic-checkbox">
+                    <label for="topic103">Development documentation</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic104" class="topic-checkbox">
+                    <label for="topic104">Accessibility considerations (WCAG)</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic105" class="topic-checkbox">
+                    <label for="topic105">Design patterns and best practices</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic106" class="topic-checkbox">
+                    <label for="topic106">Building a developer portfolio</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic107" class="topic-checkbox">
+                    <label for="topic107">Technical interviews preparation</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic108" class="topic-checkbox">
+                    <label for="topic108">Continuous learning strategies</label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>Your Full Stack Developer learning progress is saved in your browser's local storage.</p>
+    </div>
+
+    <script>
+        // Initialize checkboxes from localStorage
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get all checkbox elements
+            const checkboxes = document.querySelectorAll('.topic-checkbox');
+            
+            // Set checked status based on localStorage
+            checkboxes.forEach(checkbox => {
+                const isChecked = localStorage.getItem(checkbox.id) === 'true';
+                checkbox.checked = isChecked;
+                
+                // Add event listener for changes
+                checkbox.addEventListener('change', function() {
+                    localStorage.setItem(this.id, this.checked);
+                    updateProgress();
+                });
+            });
+            
+            // Initial progress update
+            updateProgress();
+        });
+        
+        // Update progress bar and stats
+        function updateProgress() {
+            const checkboxes = document.querySelectorAll('.topic-checkbox');
+            const totalTopics = checkboxes.length;
+            let completedTopics = 0;
+            
+            checkboxes.forEach(checkbox => {
+                if (checkbox.checked) {
+                    completedTopics++;
+                }
+            });
+            
+            const remainingTopics = totalTopics - completedTopics;
+            const progressPercentage = Math.round((completedTopics / totalTopics) * 100);
+            
+            // Update progress bar
+            document.getElementById('progressBar').style.width = progressPercentage + '%';
+            document.getElementById('progressText').textContent = progressPercentage + '%';
+            
+            // Update stats
+            document.getElementById('totalTopics').textContent = totalTopics;
+            document.getElementById('completedTopics').textContent = completedTopics;
+            document.getElementById('remainingTopics').textContent = remainingTopics;
+        }
+    </script>
+</body>
+</html>

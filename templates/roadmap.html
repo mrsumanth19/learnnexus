@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roadmap - Learning Platform</title>
+    <style>
+        :root {
+            --primary-color: #4361ee;
+            --secondary-color: #3f37c9;
+            --accent-color: #4895ef;
+            --light-color: #f8f9fa;
+            --dark-color: #212529;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: var(--dark-color);
+        }
+        
+        header {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+        
+        .logout-btn {
+            padding: 0.5rem 1rem;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background-color 0.3s;
+            text-decoration: none;
+        }
+        
+        .logout-btn:hover {
+            background-color: var(--secondary-color);
+        }
+        
+        .search-container {
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            padding: 4rem 2rem;
+            text-align: center;
+            color: white;
+        }
+        
+        .search-container h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .search-container p {
+            font-size: 1.1rem;
+            max-width: 700px;
+            margin: 0 auto 2rem auto;
+            opacity: 0.9;
+        }
+        
+        .search-box {
+            display: flex;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .search-box input {
+            flex: 1;
+            padding: 1rem;
+            font-size: 1rem;
+            border: none;
+            border-radius: 4px 0 0 4px;
+            outline: none;
+        }
+        
+        .search-box button {
+            padding: 1rem 1.5rem;
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .search-box button:hover {
+            background-color: #332db2;
+        }
+        
+        .languages-section {
+            padding: 4rem 0;
+        }
+        
+        .section-heading {
+            font-size: 1.8rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            position: relative;
+        }
+        
+        .section-heading:after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background-color: var(--accent-color);
+            margin: 1rem auto 0;
+        }
+        
+        .language-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        
+        .language-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+        
+        .language-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .card-img {
+            height: 160px;
+            background-color: var(--light-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .card-img img {
+            width: 80px;
+            height: 80px;
+        }
+        
+        .card-content {
+            padding: 1.5rem;
+        }
+        
+        .card-content h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+        
+        .card-content p {
+            color: #666;
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+        
+        .card-content .btn {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background-color: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        
+        .card-content .btn:hover {
+            background-color: var(--secondary-color);
+        }
+        
+        .features-section {
+            background-color: white;
+            padding: 4rem 0;
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .feature {
+            text-align: center;
+            padding: 1.5rem;
+        }
+        
+        .feature i {
+            font-size: 2.5rem;
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+        }
+        
+        .feature h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .feature p {
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+        }
+        
+        footer p {
+            opacity: 0.8;
+        }
+        
+        
+        @media (max-width: 768px) {
+            .search-container h1 {
+                font-size: 2rem;
+            }
+            
+            .language-cards {
+                grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            }
+        }
+    </style>
+    <script>
+        function logout() {
+            // Here you would typically clear session data, tokens, etc.
+            // For example:
+            // localStorage.removeItem('userToken');
+            // sessionStorage.clear();
+            
+            // Redirect to login page or home page
+            window.location.href = "/login"; // Change to your login page URL
+            // Alternative: window.location.href = "/"; // For home page
+            
+            return false; // Prevent default anchor behavior
+        }
+    </script>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-container">
+                <div class="logo">Roadmap</div>
+                <a href="#" class="logout-btn" onclick="logout()">Logout</a>
+            </div>
+        </div>
+    </header>
+    
+    <section class="search-container">
+        <div class="container">
+            <h1>Find Your Learning Path</h1>
+            <p>Search for courses, tutorials, and learning paths to master the skills you need for your career in tech.</p>
+            <div class="search-box">
+                <input type="text" placeholder="Search for courses, languages, or technologies...">
+                <button>Search</button>
+            </div>
+        </div>
+    </section>
+    
+    <section class="languages-section">
+        <div class="container">
+            <h2 class="section-heading">Popular Programming Languages</h2>
+            <div class="language-cards">
+                <div class="language-card">
+                    <div class="card-img">
+                        <img src="https://bairesdev.mo.cloudinary.net/blog/2023/08/What-Is-JavaScript-Used-For.jpg?tx=w_1920,q_auto" alt="JavaScript">
+                    </div>
+                    <div class="card-content">
+                        <h3>JavaScript</h3>
+                        <p>Master the language of the web. Learn from basics to advanced concepts to build interactive websites.</p>
+                        <a href="/javascript" class="btn">View Roadmap</a>
+                    </div>
+                </div>
+                
+                <div class="language-card">
+                    <div class="card-img">
+                        <img src="https://miro.medium.com/v2/resize:fit:600/1*oCCLcKVR4dw2ZwJRQ_De0w.jpeg" alt="Java">
+                    </div>
+                    <div class="card-content">
+                        <h3>Java</h3>
+                        <p>Learn object-oriented programming with Java. Perfect for enterprise applications and Android development.</p>
+                        <a href="/java" class="btn">View Roadmap</a>
+                    </div>
+                </div>
+                
+                <div class="language-card">
+                    <div class="card-img">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS60wGDjasJX21XFwt3jFW0MpQT7BUJYqyvew&s" alt="Python">
+                    </div>
+                    <div class="card-content">
+                        <h3>Python</h3>
+                        <p>From data science to web development, learn Python - one of the most versatile programming languages.</p>
+                        <a href="/python" class="btn">View Roadmap</a>
+                    </div>
+                </div>
+                
+                <div class="language-card">
+                    <div class="card-img">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSRLL5wEv6hFqb4fO49WaJVm__IfrD-TXcRZw&s" alt="Full Stack">
+                    </div>
+                    <div class="card-content">
+                        <h3>Full Stack</h3>
+                        <p>Become a complete developer by mastering both front-end and back-end technologies and frameworks.</p>
+                        <a href="/fullstack" class="btn">View Roadmap</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="features-section">
+        <div class="container">
+            <h2 class="section-heading">Why Choose Our Roadmaps</h2>
+            <div class="features">
+                <div class="feature">
+                    <h3>Step-by-Step Learning</h3>
+                    <p>Our roadmaps are carefully structured to take you from beginner to expert with clear milestones.</p>
+                </div>
+                
+                <div class="feature">
+                    <h3>Industry-Relevant Skills</h3>
+                    <p>Content created by professionals to ensure you learn what's actually used in the industry.</p>
+                </div>
+                
+                <div class="feature">
+                    <h3>Project-Based Learning</h3>
+                    <p>Apply your knowledge by building real-world projects that enhance your portfolio.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Roadmap Learning Platform. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>

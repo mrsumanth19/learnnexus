@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LearnNexus - A Collaborative Learning Platform</title>
+  <style>
+    :root {
+      --primary: #4361ee;
+      --primary-dark: #3a56d4;
+      --secondary: #7209b7;
+      --light: #f8f9fa;
+      --dark: #212529;
+      --success: #4cc9f0;
+      --gray: #6c757d;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    body {
+      background-color: var(--light);
+      color: var(--dark);
+      overflow-x: hidden;
+    }
+    
+    .header {
+      background-color: white;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: fixed;
+      width: 100%;
+      z-index: 1000;
+    }
+    
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--primary);
+    }
+    
+    .logo span {
+      color: var(--secondary);
+    }
+    
+    .logo-icon {
+      font-size: 2rem;
+      color: var(--primary);
+    }
+    
+    .menu-toggle {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      color: var(--primary);
+      cursor: pointer;
+      z-index: 1001;
+    }
+    
+    .nav {
+      position: fixed;
+      top: 0;
+      right: 0;
+      height: 100vh;
+      width: 300px;
+      background-color: white;
+      box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+      padding: 6rem 2rem 2rem;
+      transform: translateX(100%);
+      transition: transform 0.3s ease;
+      z-index: 999;
+    }
+    
+    .nav.active {
+      transform: translateX(0);
+    }
+    
+    .nav-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    
+    .nav-link {
+      text-decoration: none;
+      color: var(--dark);
+      font-size: 1.2rem;
+      font-weight: 500;
+      position: relative;
+      padding: 0.5rem 0;
+    }
+    
+    .nav-link:hover {
+      color: var(--primary);
+    }
+    
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background-color: var(--primary);
+      transition: width 0.3s ease;
+    }
+    
+    .nav-link:hover::after {
+      width: 100%;
+    }
+    
+    .btn {
+      background-color: var(--primary);
+      color: white;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: 50px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      text-decoration: none;
+      display: inline-block;
+    }
+    
+    .btn:hover {
+      background-color: var(--primary-dark);
+    }
+    
+    .btn-outline {
+      background-color: transparent;
+      color: var(--primary);
+      border: 2px solid var(--primary);
+    }
+    
+    .btn-outline:hover {
+      background-color: var(--primary);
+      color: white;
+    }
+    
+    .hero {
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 2rem;
+      background: linear-gradient(135deg, rgba(67, 97, 238, 0.05) 0%, rgba(114, 9, 183, 0.05) 100%);
+    }
+    
+    .hero-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      align-items: center;
+    }
+    
+    .hero-text {
+      padding: 2rem;
+    }
+    
+    .hero-title {
+      font-size: 3rem;
+      margin-bottom: 1.5rem;
+      color: var(--dark);
+    }
+    
+    .hero-subtitle {
+      font-size: 1.2rem;
+      margin-bottom: 2rem;
+      color: var(--gray);
+      line-height: 1.6;
+    }
+    
+    .hero-buttons {
+      display: flex;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+    
+    .hero-image {
+      text-align: center;
+    }
+    
+    .hero-image img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    }
+    
+    .features {
+      padding: 5rem 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    .section-title {
+      font-size: 2.5rem;
+      text-align: center;
+      margin-bottom: 3rem;
+      color: var(--dark);
+    }
+    
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+    
+    .feature-card {
+      background-color: white;
+      border-radius: 10px;
+      padding: 2rem;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+      transition: transform 0.3s ease;
+    }
+    
+    .feature-card:hover {
+      transform: translateY(-10px);
+    }
+    
+    .feature-icon {
+      font-size: 2.5rem;
+      color: var(--primary);
+      margin-bottom: 1.5rem;
+    }
+    
+    .feature-title {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      color: var(--dark);
+    }
+    
+    .feature-description {
+      color: var(--gray);
+      line-height: 1.6;
+    }
+    
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: rgba(0, 0, 0, 0.5);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease;
+      z-index: 998;
+    }
+    
+    .overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+    
+    @media (max-width: 768px) {
+      .hero-content {
+        grid-template-columns: 1fr;
+      }
+      
+      .hero-image {
+        grid-row: 1;
+      }
+      
+      .hero-text {
+        grid-row: 2;
+        padding: 1rem 0;
+      }
+      
+      .hero-title {
+        font-size: 2.5rem;
+      }
+      
+      .features-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header with logo and menu toggle -->
+  <header class="header">
+    <div class="logo">
+      <div class="logo-icon">🧠</div>
+      Learn<span>Nexus</span>
+    </div>
+    <button class="menu-toggle" id="menuToggle">
+      ☰
+    </button>
+  </header>
+  
+  <!-- Navigation menu -->
+  <nav class="nav" id="nav">
+    <ul class="nav-links">
+      <li><a href="./home" class="nav-link">Home</a></li>
+      <li><a href="./aboutus" class="nav-link">About Us</a></li>
+      <li><a href="./login" class="nav-link">Login</a></li>
+      <li><a href="./register" class="nav-link">Register</a></li>
+      <li><a href="./index" class="nav-link">study hub</a></li>
+      <li><a href="./campus_events" class="nav-link">Advertise & Events</a></li>
+      <li><a href="./upload" class="nav-link">Upload</a></li>
+    </ul>
+  </nav>
+  
+  <!-- Overlay for menu backdrop -->
+  <div class="overlay" id="overlay"></div>
+  
+  <!-- Hero section -->
+  <section class="hero">
+    <div class="hero-content">
+      <div class="hero-text">
+        <h1 class="hero-title">Collaborative Learning for Everyone</h1>
+        <p class="hero-subtitle">LearnNexus connects learners and educators in an interactive environment designed to enhance the learning experience through collaboration, resource sharing, and personalized education paths.</p>
+        <div class="hero-buttons">
+          <a href="./login" class="btn">Get Started</a>
+          <a href="./aboutus" class="btn btn-outline">Learn More</a>
+        </div>
+      </div>
+      <div class="hero-image">
+        <img src="https://www.valamis.com/wp-content/uploads/2022/09/collaborative-learning.png" alt="Collaborative Learning Platform">
+      </div>
+    </div>
+  </section>
+  
+  <!-- Features section -->
+  <section class="features">
+    <h2 class="section-title">Why Choose LearnNexus?</h2>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">🤝</div>
+        <h3 class="feature-title">Collaborative Learning</h3>
+        <p class="feature-description">Work together with peers and instructors in real-time collaborative spaces designed to enhance learning outcomes.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📊</div>
+        <h3 class="feature-title">Progress Tracking</h3>
+        <p class="feature-description">Monitor your learning journey with detailed analytics and progress reports to stay motivated and on track.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🧠</div>
+        <h3 class="feature-title">Personalized Paths</h3>
+        <p class="feature-description">Discover customized learning experiences tailored to your unique goals, preferences, and learning style.</p>
+      </div>
+    </div>
+  </section>
+  
+  <script>
+    // Menu toggle functionality
+    const menuToggle = document.getElementById('menuToggle');
+    const nav = document.getElementById('nav');
+    const overlay = document.getElementById('overlay');
+    
+    menuToggle.addEventListener('click', () => {
+      nav.classList.toggle('active');
+      overlay.classList.toggle('active');
+    });
+    
+    overlay.addEventListener('click', () => {
+      nav.classList.remove('active');
+      overlay.classList.remove('active');
+    });
+  </script>
+</body>
+</html>

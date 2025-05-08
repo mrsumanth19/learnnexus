@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Java Learning Roadmap Tracker</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            color: #333;
+            background-color: #f5f9fc;
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #e74c3c;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #c0392b;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+        h3 {
+            color: #e74c3c;
+            margin-top: 20px;
+        }
+        .section {
+            background-color: white;
+            border-radius: 8px;
+            padding: 15px 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            border-left: 5px solid #e74c3c;
+        }
+        .topic-group {
+            margin-left: 15px;
+        }
+        .topic {
+            display: flex;
+            align-items: center;
+            margin: 8px 0;
+        }
+        .topic label {
+            margin-left: 8px;
+            cursor: pointer;
+            flex: 1;
+        }
+        input[type="checkbox"] {
+            transform: scale(1.2);
+            cursor: pointer;
+        }
+        .progress-container {
+            background-color: #eee;
+            border-radius: 20px;
+            height: 20px;
+            width: 100%;
+            margin: 20px 0;
+            position: relative;
+        }
+        .progress-bar {
+            background-color: #e74c3c;
+            height: 100%;
+            border-radius: 20px;
+            width: 0%;
+            transition: width 0.3s ease-in-out;
+        }
+        .progress-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #333;
+            font-weight: bold;
+            text-shadow: 0 0 3px rgba(255, 255, 255, 0.5);
+        }
+        .summary {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+        .stats {
+            background-color: white;
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            flex: 1;
+            margin: 0 10px;
+            text-align: center;
+            border-bottom: 3px solid #e74c3c;
+        }
+        .stats h3 {
+            margin-top: 0;
+            color: #2c3e50;
+        }
+        .stats p {
+            font-size: 24px;
+            font-weight: bold;
+            color: #e74c3c;
+            margin: 10px 0 0;
+        }
+        .footer {
+            margin-top: 30px;
+            text-align: center;
+            color: #7f8c8d;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <h1>Java Learning Roadmap Tracker</h1>
+    
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+        <div class="progress-text" id="progressText">0%</div>
+    </div>
+    
+    <div class="summary">
+        <div class="stats">
+            <h3>Total Topics</h3>
+            <p id="totalTopics">0</p>
+        </div>
+        <div class="stats">
+            <h3>Completed</h3>
+            <p id="completedTopics">0</p>
+        </div>
+        <div class="stats">
+            <h3>Remaining</h3>
+            <p id="remainingTopics">0</p>
+        </div>
+    </div>
+
+    <div id="roadmap">
+        <!-- Section 1: Java Fundamentals -->
+        <div class="section">
+            <h2>1. Java Fundamentals</h2>
+            <div class="topic-group">
+                <div class="topic">
+                    <input type="checkbox" id="topic1" class="topic-checkbox">
+                    <label for="topic1">Java Development Kit (JDK) installation and setup</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic2" class="topic-checkbox">
+                    <label for="topic2">Java Virtual Machine (JVM) concepts</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic3" class="topic-checkbox">
+                    <label for="topic3">Basic syntax and structure</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic4" class="topic-checkbox">
+                    <label for="topic4">Data types, variables, and literals</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic5" class="topic-checkbox">
+                    <label for="topic5">Operators and expressions</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic6" class="topic-checkbox">
+                    <label for="topic6">Control flow statements (if-else, switch)</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic7" class="topic-checkbox">
+                    <label for="topic7">Loops (for, while, do-while)</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic8" class="topic-checkbox">
+                    <label for="topic8">Methods and method overloading</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic9" class="topic-checkbox">
+                    <label for="topic9">Arrays and array operations</label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 2: Object-Oriented Programming -->
+        <div class="section">
+            <h2>2. Object-Oriented Programming</h2>
+            <div class="topic-group">
+                <div class="topic">
+                    <input type="checkbox" id="topic10" class="topic-checkbox">
+                    <label for="topic10">Classes and objects</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic11" class="topic-checkbox">
+                    <label for="topic11">Constructors and initialization</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic12" class="topic-checkbox">
+                    <label for="topic12">Access modifiers (public, private, protected, default)</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic13" class="topic-checkbox">
+                    <label for="topic13">Encapsulation and data hiding</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic14" class="topic-checkbox">
+                    <label for="topic14">Inheritance and method overriding</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic15" class="topic-checkbox">
+                    <label for="topic15">Polymorphism (runtime and compile-time)</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic16" class="topic-checkbox">
+                    <label for="topic16">Abstraction (abstract classes and methods)</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic17" class="topic-checkbox">
+                    <label for="topic17">Interfaces and implementation</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic18" class="topic-checkbox">
+                    <label for="topic18">Static members and nested classes</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic19" class="topic-checkbox">
+                    <label for="topic19">Final keyword (classes, methods, variables)</label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 3: Java Core APIs -->
+        <div class="section">
+            <h2>3. Java Core APIs</h2>
+            <div class="topic-group">
+                <div class="topic">
+                    <input type="checkbox" id="topic20" class="topic-checkbox">
+                    <label for="topic20">String and StringBuilder/StringBuffer</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic21" class="topic-checkbox">
+                    <label for="topic21">Java Collections Framework (List, Set, Map)</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic22" class="topic-checkbox">
+                    <label for="topic22">ArrayList, LinkedList, HashSet, HashMap implementation</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic23" class="topic-checkbox">
+                    <label for="topic23">Generics and type safety</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic24" class="topic-checkbox">
+                    <label for="topic24">Exception handling (try-catch-finally)</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic25" class="topic-checkbox">
+                    <label for="topic25">Custom exceptions and exception propagation</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic26" class="topic-checkbox">
+                    <label for="topic26">Java I/O and NIO</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic27" class="topic-checkbox">
+                    <label for="topic27">File handling and serialization</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic28" class="topic-checkbox">
+                    <label for="topic28">Date and Time API (Legacy and Java 8+)</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic29" class="topic-checkbox">
+                    <label for="topic29">Regular expressions</label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 4: Advanced Java Features -->
+        <div class="section">
+            <h2>4. Advanced Java Features</h2>
+            <div class="topic-group">
+                <div class="topic">
+                    <input type="checkbox" id="topic30" class="topic-checkbox">
+                    <label for="topic30">Multithreading and concurrency</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic31" class="topic-checkbox">
+                    <label for="topic31">Thread lifecycle and synchronization</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic32" class="topic-checkbox">
+                    <label for="topic32">ExecutorService and thread pools</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic33" class="topic-checkbox">
+                    <label for="topic33">Java Memory Model and volatile keyword</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic34" class="topic-checkbox">
+                    <label for="topic34">Concurrent Collections</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic35" class="topic-checkbox">
+                    <label for="topic35">Reflection API</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic36" class="topic-checkbox">
+                    <label for="topic36">Annotations and custom annotations</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic37" class="topic-checkbox">
+                    <label for="topic37">Java 8+ features (Lambda expressions, Streams API)</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic38" class="topic-checkbox">
+                    <label for="topic38">Functional interfaces and method references</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic39" class="topic-checkbox">
+                    <label for="topic39">Optional class to handle null values</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic40" class="topic-checkbox">
+                    <label for="topic40">CompletableFuture for asynchronous programming</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic41" class="topic-checkbox">
+                    <label for="topic41">Java modules (Project Jigsaw)</label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 5: Database Access -->
+        <div class="section">
+            <h2>5. Database Access</h2>
+            <div class="topic-group">
+                <div class="topic">
+                    <input type="checkbox" id="topic42" class="topic-checkbox">
+                    <label for="topic42">JDBC fundamentals</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic43" class="topic-checkbox">
+                    <label for="topic43">Connection pooling</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic44" class="topic-checkbox">
+                    <label for="topic44">SQL basics for Java developers</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic45" class="topic-checkbox">
+                    <label for="topic45">Prepared statements and batch processing</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic46" class="topic-checkbox">
+                    <label for="topic46">Transaction management</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic47" class="topic-checkbox">
+                    <label for="topic47">Object-Relational Mapping (ORM) concepts</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic48" class="topic-checkbox">
+                    <label for="topic48">JPA and Hibernate basics</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic49" class="topic-checkbox">
+                    <label for="topic49">Entity relationships and mappings</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic50" class="topic-checkbox">
+                    <label for="topic50">JPQL and Criteria API</label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 6: Web Development with Java -->
+        <div class="section">
+            <h2>6. Web Development with Java</h2>
+            <div class="topic-group">
+                <div class="topic">
+                    <input type="checkbox" id="topic51" class="topic-checkbox">
+                    <label for="topic51">Servlet API and lifecycle</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic52" class="topic-checkbox">
+                    <label for="topic52">HTTP basics for Java developers</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic53" class="topic-checkbox">
+                    <label for="topic53">JSP and JSTL</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic54" class="topic-checkbox">
+                    <label for="topic54">Filters and listeners</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic55" class="topic-checkbox">
+                    <label for="topic55">Session management and cookies</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic56" class="topic-checkbox">
+                    <label for="topic56">Spring Framework core concepts</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic57" class="topic-checkbox">
+                    <label for="topic57">Dependency Injection and Inversion of Control</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic58" class="topic-checkbox">
+                    <label for="topic58">Spring MVC architecture</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic59" class="topic-checkbox">
+                    <label for="topic59">Spring Boot for rapid development</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic60" class="topic-checkbox">
+                    <label for="topic60">RESTful web services with Spring</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic61" class="topic-checkbox">
+                    <label for="topic61">Spring Security basics</label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 7: Enterprise Java -->
+        <div class="section">
+            <h2>7. Enterprise Java</h2>
+            <div class="topic-group">
+                <div class="topic">
+                    <input type="checkbox" id="topic62" class="topic-checkbox">
+                    <label for="topic62">Jakarta EE overview (formerly Java EE)</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic63" class="topic-checkbox">
+                    <label for="topic63">Enterprise JavaBeans (EJB)</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic64" class="topic-checkbox">
+                    <label for="topic64">Context and Dependency Injection (CDI)</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic65" class="topic-checkbox">
+                    <label for="topic65">Java Message Service (JMS)</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic66" class="topic-checkbox">
+                    <label for="topic66">WebSockets and Server-Sent Events</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic67" class="topic-checkbox">
+                    <label for="topic67">Java Transaction API (JTA)</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic68" class="topic-checkbox">
+                    <label for="topic68">Batch processing in Java</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic69" class="topic-checkbox">
+                    <label for="topic69">Microservices architecture with Java</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic70" class="topic-checkbox">
+                    <label for="topic70">Service discovery and API gateway patterns</label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 8: Testing and Quality -->
+        <div class="section">
+            <h2>8. Testing and Quality</h2>
+            <div class="topic-group">
+                <div class="topic">
+                    <input type="checkbox" id="topic71" class="topic-checkbox">
+                    <label for="topic71">JUnit framework</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic72" class="topic-checkbox">
+                    <label for="topic72">TestNG as an alternative</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic73" class="topic-checkbox">
+                    <label for="topic73">Mockito for mocking objects</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic74" class="topic-checkbox">
+                    <label for="topic74">PowerMock for advanced mocking</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic75" class="topic-checkbox">
+                    <label for="topic75">Integration testing strategies</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic76" class="topic-checkbox">
+                    <label for="topic76">Test-Driven Development (TDD)</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic77" class="topic-checkbox">
+                    <label for="topic77">Behavior-Driven Development (BDD) with Cucumber</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic78" class="topic-checkbox">
+                    <label for="topic78">Code quality tools (SonarQube, Checkstyle)</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic79" class="topic-checkbox">
+                    <label for="topic79">Performance testing with JMeter</label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 9: Build and Deployment -->
+        <div class="section">
+            <h2>9. Build and Deployment</h2>
+            <div class="topic-group">
+                <div class="topic">
+                    <input type="checkbox" id="topic80" class="topic-checkbox">
+                    <label for="topic80">Build tools (Maven, Gradle)</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic81" class="topic-checkbox">
+                    <label for="topic81">Dependency management</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic82" class="topic-checkbox">
+                    <label for="topic82">Continuous Integration/Continuous Deployment (CI/CD)</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic83" class="topic-checkbox">
+                    <label for="topic83">Jenkins for automation</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic84" class="topic-checkbox">
+                    <label for="topic84">Docker containerization for Java applications</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic85" class="topic-checkbox">
+                    <label for="topic85">Kubernetes for orchestration</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic86" class="topic-checkbox">
+                    <label for="topic86">Application servers (Tomcat, WildFly, etc.)</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic87" class="topic-checkbox">
+                    <label for="topic87">Cloud deployment (AWS, Azure, GCP)</label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 10: Professional Development -->
+        <div class="section">
+            <h2>10. Professional Development</h2>
+            <div class="topic-group">
+                <div class="topic">
+                    <input type="checkbox" id="topic88" class="topic-checkbox">
+                    <label for="topic88">Design patterns in Java</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic89" class="topic-checkbox">
+                    <label for="topic89">Clean code principles</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic90" class="topic-checkbox">
+                    <label for="topic90">SOLID principles</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic91" class="topic-checkbox">
+                    <label for="topic91">Code refactoring techniques</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic92" class="topic-checkbox">
+                    <label for="topic92">Performance optimization in Java</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic93" class="topic-checkbox">
+                    <label for="topic93">Memory management and garbage collection</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic94" class="topic-checkbox">
+                    <label for="topic94">Java profiling and debugging</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic95" class="topic-checkbox">
+                    <label for="topic95">Security best practices</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic96" class="topic-checkbox">
+                    <label for="topic96">Version control with Git for Java projects</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic97" class="topic-checkbox">
+                    <label for="topic97">Contributing to open-source Java projects</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic98" class="topic-checkbox">
+                    <label for="topic98">Building a portfolio of Java applications</label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>Your Java learning progress is saved in your browser's local storage.</p>
+    </div>
+
+    <script>
+        // Initialize checkboxes from localStorage
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get all checkbox elements
+            const checkboxes = document.querySelectorAll('.topic-checkbox');
+            
+            // Set checked status based on localStorage
+            checkboxes.forEach(checkbox => {
+                const isChecked = localStorage.getItem(checkbox.id) === 'true';
+                checkbox.checked = isChecked;
+                
+                // Add event listener for changes
+                checkbox.addEventListener('change', function() {
+                    localStorage.setItem(this.id, this.checked);
+                    updateProgress();
+                });
+            });
+            
+            // Initial progress update
+            updateProgress();
+        });
+        
+        // Update progress bar and stats
+        function updateProgress() {
+            const checkboxes = document.querySelectorAll('.topic-checkbox');
+            const totalTopics = checkboxes.length;
+            let completedTopics = 0;
+            
+            checkboxes.forEach(checkbox => {
+                if (checkbox.checked) {
+                    completedTopics++;
+                }
+            });
+            
+            const remainingTopics = totalTopics - completedTopics;
+            const progressPercentage = Math.round((completedTopics / totalTopics) * 100);
+            
+            // Update progress bar
+            document.getElementById('progressBar').style.width = progressPercentage + '%';
+            document.getElementById('progressText').textContent = progressPercentage + '%';
+            
+            // Update stats
+            document.getElementById('totalTopics').textContent = totalTopics;
+            document.getElementById('completedTopics').textContent = completedTopics;
+            document.getElementById('remainingTopics').textContent = remainingTopics;
+        }
+    </script>
+</body>
+</html>

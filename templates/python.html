@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python Learning Roadmap Tracker</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            color: #333;
+            background-color: #f5f9fc;
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #2980b9;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+        h3 {
+            color: #3498db;
+            margin-top: 20px;
+        }
+        .section {
+            background-color: white;
+            border-radius: 8px;
+            padding: 15px 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            border-left: 5px solid #3498db;
+        }
+        .topic-group {
+            margin-left: 15px;
+        }
+        .topic {
+            display: flex;
+            align-items: center;
+            margin: 8px 0;
+        }
+        .topic label {
+            margin-left: 8px;
+            cursor: pointer;
+            flex: 1;
+        }
+        input[type="checkbox"] {
+            transform: scale(1.2);
+            cursor: pointer;
+        }
+        .progress-container {
+            background-color: #eee;
+            border-radius: 20px;
+            height: 20px;
+            width: 100%;
+            margin: 20px 0;
+            position: relative;
+        }
+        .progress-bar {
+            background-color: #3498db;
+            height: 100%;
+            border-radius: 20px;
+            width: 0%;
+            transition: width 0.3s ease-in-out;
+        }
+        .progress-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #333;
+            font-weight: bold;
+            text-shadow: 0 0 3px rgba(255, 255, 255, 0.5);
+        }
+        .summary {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+        .stats {
+            background-color: white;
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            flex: 1;
+            margin: 0 10px;
+            text-align: center;
+            border-bottom: 3px solid #3498db;
+        }
+        .stats h3 {
+            margin-top: 0;
+            color: #2c3e50;
+        }
+        .stats p {
+            font-size: 24px;
+            font-weight: bold;
+            color: #3498db;
+            margin: 10px 0 0;
+        }
+        .footer {
+            margin-top: 30px;
+            text-align: center;
+            color: #7f8c8d;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <h1>Python Learning Roadmap Tracker</h1>
+    
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+        <div class="progress-text" id="progressText">0%</div>
+    </div>
+    
+    <div class="summary">
+        <div class="stats">
+            <h3>Total Topics</h3>
+            <p id="totalTopics">0</p>
+        </div>
+        <div class="stats">
+            <h3>Completed</h3>
+            <p id="completedTopics">0</p>
+        </div>
+        <div class="stats">
+            <h3>Remaining</h3>
+            <p id="remainingTopics">0</p>
+        </div>
+    </div>
+
+    <div id="roadmap">
+        <!-- Section 1: Python Fundamentals -->
+        <div class="section">
+            <h2>1. Python Fundamentals</h2>
+            <div class="topic-group">
+                <div class="topic">
+                    <input type="checkbox" id="topic1" class="topic-checkbox">
+                    <label for="topic1">Python installation and setup</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic2" class="topic-checkbox">
+                    <label for="topic2">Basic syntax and data types (strings, numbers, lists, tuples, dictionaries)</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic3" class="topic-checkbox">
+                    <label for="topic3">Variables and operators</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic4" class="topic-checkbox">
+                    <label for="topic4">Control flow (if-else statements, loops)</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic5" class="topic-checkbox">
+                    <label for="topic5">Functions and modules</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic6" class="topic-checkbox">
+                    <label for="topic6">Exception handling</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic7" class="topic-checkbox">
+                    <label for="topic7">File I/O operations</label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 2: Intermediate Python -->
+        <div class="section">
+            <h2>2. Intermediate Python</h2>
+            <div class="topic-group">
+                <div class="topic">
+                    <input type="checkbox" id="topic8" class="topic-checkbox">
+                    <label for="topic8">Object-oriented programming (classes, inheritance, polymorphism)</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic9" class="topic-checkbox">
+                    <label for="topic9">List comprehensions and generators</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic10" class="topic-checkbox">
+                    <label for="topic10">Lambda functions</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic11" class="topic-checkbox">
+                    <label for="topic11">Decorators</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic12" class="topic-checkbox">
+                    <label for="topic12">Regular expressions</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic13" class="topic-checkbox">
+                    <label for="topic13">Virtual environments and package management (pip)</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic14" class="topic-checkbox">
+                    <label for="topic14">Working with JSON, CSV, and other file formats</label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 3: Python Libraries and Frameworks -->
+        <div class="section">
+            <h2>3. Python Libraries and Frameworks</h2>
+            
+            <h3>Data Science and Analysis</h3>
+            <div class="topic-group">
+                <div class="topic">
+                    <input type="checkbox" id="topic15" class="topic-checkbox">
+                    <label for="topic15">NumPy (numerical computing)</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic16" class="topic-checkbox">
+                    <label for="topic16">Pandas (data manipulation)</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic17" class="topic-checkbox">
+                    <label for="topic17">Matplotlib/Seaborn (data visualization)</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic18" class="topic-checkbox">
+                    <label for="topic18">SciPy (scientific computing)</label>
+                </div>
+            </div>
+            
+            <h3>Web Development</h3>
+            <div class="topic-group">
+                <div class="topic">
+                    <input type="checkbox" id="topic19" class="topic-checkbox">
+                    <label for="topic19">Django (full-stack framework)</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic20" class="topic-checkbox">
+                    <label for="topic20">Flask (micro web framework)</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic21" class="topic-checkbox">
+                    <label for="topic21">FastAPI (modern API framework)</label>
+                </div>
+            </div>
+            
+            <h3>Machine Learning and AI</h3>
+            <div class="topic-group">
+                <div class="topic">
+                    <input type="checkbox" id="topic22" class="topic-checkbox">
+                    <label for="topic22">Scikit-learn (machine learning algorithms)</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic23" class="topic-checkbox">
+                    <label for="topic23">TensorFlow/Keras (deep learning)</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic24" class="topic-checkbox">
+                    <label for="topic24">PyTorch (deep learning)</label>
+                </div>
+            </div>
+            
+            <h3>Automation and Scripting</h3>
+            <div class="topic-group">
+                <div class="topic">
+                    <input type="checkbox" id="topic25" class="topic-checkbox">
+                    <label for="topic25">Requests (HTTP library)</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic26" class="topic-checkbox">
+                    <label for="topic26">Beautiful Soup (web scraping)</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic27" class="topic-checkbox">
+                    <label for="topic27">Selenium (browser automation)</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic28" class="topic-checkbox">
+                    <label for="topic28">PyAutoGUI (GUI automation)</label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 4: Advanced Topics -->
+        <div class="section">
+            <h2>4. Advanced Topics</h2>
+            <div class="topic-group">
+                <div class="topic">
+                    <input type="checkbox" id="topic29" class="topic-checkbox">
+                    <label for="topic29">Concurrency (threading, multiprocessing)</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic30" class="topic-checkbox">
+                    <label for="topic30">Asynchronous programming (asyncio)</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic31" class="topic-checkbox">
+                    <label for="topic31">Database interactions (SQL, SQLAlchemy, MongoDB)</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic32" class="topic-checkbox">
+                    <label for="topic32">Testing (unittest, pytest)</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic33" class="topic-checkbox">
+                    <label for="topic33">API development and consumption</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic34" class="topic-checkbox">
+                    <label for="topic34">Design patterns in Python</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic35" class="topic-checkbox">
+                    <label for="topic35">Performance optimization</label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 5: Project-Based Learning -->
+        <div class="section">
+            <h2>5. Project-Based Learning</h2>
+            <div class="topic-group">
+                <div class="topic">
+                    <input type="checkbox" id="topic36" class="topic-checkbox">
+                    <label for="topic36">Personal portfolio projects</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic37" class="topic-checkbox">
+                    <label for="topic37">Contributing to open source</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic38" class="topic-checkbox">
+                    <label for="topic38">Solving problems on platforms like LeetCode, HackerRank</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic39" class="topic-checkbox">
+                    <label for="topic39">Building real-world applications based on your interests</label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 6: Professional Development -->
+        <div class="section">
+            <h2>6. Professional Development</h2>
+            <div class="topic-group">
+                <div class="topic">
+                    <input type="checkbox" id="topic40" class="topic-checkbox">
+                    <label for="topic40">Code documentation</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic41" class="topic-checkbox">
+                    <label for="topic41">Clean code principles</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic42" class="topic-checkbox">
+                    <label for="topic42">Version control with Git</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic43" class="topic-checkbox">
+                    <label for="topic43">CI/CD pipelines</label>
+                </div>
+                <div class="topic">
+                    <input type="checkbox" id="topic44" class="topic-checkbox">
+                    <label for="topic44">Deployment options (Heroku, AWS, Azure, etc.)</label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>Your Python learning progress is saved in your browser's local storage.</p>
+    </div>
+
+    <script>
+        // Initialize checkboxes from localStorage
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get all checkbox elements
+            const checkboxes = document.querySelectorAll('.topic-checkbox');
+            
+            // Set checked status based on localStorage
+            checkboxes.forEach(checkbox => {
+                const isChecked = localStorage.getItem(checkbox.id) === 'true';
+                checkbox.checked = isChecked;
+                
+                // Add event listener for changes
+                checkbox.addEventListener('change', function() {
+                    localStorage.setItem(this.id, this.checked);
+                    updateProgress();
+                });
+            });
+            
+            // Initial progress update
+            updateProgress();
+        });
+        
+        // Update progress bar and stats
+        function updateProgress() {
+            const checkboxes = document.querySelectorAll('.topic-checkbox');
+            const totalTopics = checkboxes.length;
+            let completedTopics = 0;
+            
+            checkboxes.forEach(checkbox => {
+                if (checkbox.checked) {
+                    completedTopics++;
+                }
+            });
+            
+            const remainingTopics = totalTopics - completedTopics;
+            const progressPercentage = Math.round((completedTopics / totalTopics) * 100);
+            
+            // Update progress bar
+            document.getElementById('progressBar').style.width = progressPercentage + '%';
+            document.getElementById('progressText').textContent = progressPercentage + '%';
+            
+            // Update stats
+            document.getElementById('totalTopics').textContent = totalTopics;
+            document.getElementById('completedTopics').textContent = completedTopics;
+            document.getElementById('remainingTopics').textContent = remainingTopics;
+        }
+    </script>
+</body>
+</html>

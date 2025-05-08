@@ -1,0 +1,339 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <!-- Question Section -->
+    <div class="card mb-4">
+        <div class="card-body">
+            <h1 class="card-title">{{ question.title }}</h1>
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <div class="d-flex align-items-center">
+                    <div class="me-3">
+                        <button class="btn btn-outline-secondary btn-sm vote-btn" data-type="question" data-id="{{ question.id }}" data-vote="up">
+                            <i class="bi bi-arrow-up"></i>
+                        </button>
+                        <div class="text-center my-1 vote-count" id="question-{{ question.id }}-votes">
+                            {{ question.vote_count or 0 }}
+                        </div>
+                        <button class="btn btn-outline-secondary btn-sm vote-btn" data-type="question" data-id="{{ question.id }}" data-vote="down">
+                            <i class="bi bi-arrow-down"></i>
+                        </button>
+                    </div>
+                    <div>
+                        <p class="card-text">{{ question.content }}</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="d-flex justify-content-between align-items-center">
+                <div class="tags mb-2">
+                    {% if question.tags %}
+                    {% for tag in question.tags.split(',') %}
+                    <span class="badge bg-secondary me-1">{{ tag.strip() }}</span>
+                    {% endfor %}
+                    {% endif %}
+                </div>
+                
+                <div class="text-end">
+                    <small class="text-muted">
+                        Asked by <strong>{{ question.author_name }}</strong> on {{ question.created_at }}
+                    </small>
+                    {% if question.user_id == session.get('user_id') %}
+                    <div class="mt-2">
+                        <button class="btn btn-sm btn-outline-danger delete-question" data-id="{{ question.id }}">
+                            <i class="bi bi-trash"></i> Delete
+                        </button>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Answers Section -->
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2>{{ answers|length }} Answers</h2>
+        <button class="btn btn-outline-primary" onclick="scrollToAnswerForm()">
+            <i class="bi bi-pencil"></i> Answer This Question
+        </button>
+    </div>
+
+    {% if answers %}
+    <div class="answers-list mb-5">
+        {% for answer in answers %}
+        <div class="card mb-3 {% if answer.is_accepted %}border-success{% endif %}" id="answer-{{ answer.id }}">
+            <div class="card-body">
+                <div class="d-flex">
+                    <div class="me-3 text-center" style="min-width: 40px;">
+                        <button class="btn btn-outline-secondary btn-sm vote-btn" data-type="answer" data-id="{{ answer.id }}" data-vote="up">
+                            <i class="bi bi-arrow-up"></i>
+                        </button>
+                        <div class="my-1 vote-count" id="answer-{{ answer.id }}-votes">
+                            {{ answer.vote_count or 0 }}
+                        </div>
+                        <button class="btn btn-outline-secondary btn-sm vote-btn" data-type="answer" data-id="{{ answer.id }}" data-vote="down">
+                            <i class="bi bi-arrow-down"></i>
+                        </button>
+                        
+                        {% if question.user_id == session.get('user_id') and not answer.is_accepted %}
+                        <button class="btn btn-sm mt-2 accept-answer" data-id="{{ answer.id }}" title="Mark as accepted">
+                            <i class="bi bi-check-circle"></i>
+                        </button>
+                        {% endif %}
+                        
+                        {% if answer.is_accepted %}
+                        <div class="mt-2 text-success">
+                            <i class="bi bi-check-circle-fill"></i>
+                        </div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="flex-grow-1">
+                        <div class="answer-content">{{ answer.content }}</div>
+                        
+                        <div class="d-flex justify-content-between align-items-center mt-3">
+                            <div class="text-muted">
+                                <small>
+                                    Answered by <strong>{{ answer.author_name }}</strong> on {{ answer.created_at }}
+                                </small>
+                            </div>
+                            
+                            {% if answer.user_id == session.get('user_id') %}
+                            <div>
+                                <button class="btn btn-sm btn-outline-danger delete-answer" data-id="{{ answer.id }}">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="alert alert-info">
+        No answers yet. Be the first to answer this question!
+    </div>
+    {% endif %}
+
+    <!-- Answer Form -->
+    <div class="card" id="answerFormSection">
+        <div class="card-header">
+            <h3>Your Answer</h3>
+        </div>
+        <div class="card-body">
+            {% if "user_id" in session %}
+            <form id="answerForm">
+                <input type="hidden" id="questionId" value="{{ question.id }}">
+                <div class="mb-3">
+                    <textarea class="form-control" id="answerContent" rows="5" placeholder="Write your answer here..." required></textarea>
+                </div>
+                <div class="d-flex justify-content-end">
+                    <button type="submit" class="btn btn-primary">Post Answer</button>
+                </div>
+            </form>
+            {% else %}
+            <div class="alert alert-warning">
+                Please <a href="{{ url_for('login') }}">login</a> to post an answer.
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<!-- Confirmation Modals -->
+<div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Confirm Delete</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to delete this? This action cannot be undone.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-danger" id="confirmDeleteBtn">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Post answer
+    document.getElementById('answerForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const questionId = document.getElementById('questionId').value;
+        const content = document.getElementById('answerContent').value;
+        
+        const formData = new FormData();
+        formData.append('question_id', questionId);
+        formData.append('content', content);
+        
+        fetch('/api/post-answer', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                window.location.reload();
+            } else {
+                alert(data.error || 'Error posting answer');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Error posting answer');
+        });
+    });
+
+    // Delete question/answer handling
+    let itemToDelete = null;
+    let isQuestion = false;
+    
+    document.querySelectorAll('.delete-question').forEach(btn => {
+        btn.addEventListener('click', function() {
+            itemToDelete = this.getAttribute('data-id');
+            isQuestion = true;
+            const modal = new bootstrap.Modal(document.getElementById('confirmDeleteModal'));
+            modal.show();
+        });
+    });
+    
+    document.querySelectorAll('.delete-answer').forEach(btn => {
+        btn.addEventListener('click', function() {
+            itemToDelete = this.getAttribute('data-id');
+            isQuestion = false;
+            const modal = new bootstrap.Modal(document.getElementById('confirmDeleteModal'));
+            modal.show();
+        });
+    });
+    
+    document.getElementById('confirmDeleteBtn').addEventListener('click', function() {
+        if (itemToDelete) {
+            const endpoint = isQuestion 
+                ? `/api/delete-question/${itemToDelete}`
+                : `/api/delete-answer/${itemToDelete}`;
+            
+            fetch(endpoint, {
+                method: 'POST'
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    window.location.reload();
+                } else {
+                    alert(data.error || 'Error deleting item');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error deleting item');
+            });
+        }
+    });
+    
+    // Voting system
+    document.querySelectorAll('.vote-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const type = this.getAttribute('data-type');
+            const id = this.getAttribute('data-id');
+            const vote = this.getAttribute('data-vote');
+            
+            fetch('/api/vote', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    type: type,
+                    id: id,
+                    vote: vote
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    document.getElementById(`${type}-${id}-votes`).textContent = data.new_count;
+                } else {
+                    alert(data.error || 'Error processing vote');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error processing vote');
+            });
+        });
+    });
+    
+    // Accept answer
+    document.querySelectorAll('.accept-answer').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const answerId = this.getAttribute('data-id');
+            
+            fetch('/api/accept-answer', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    answer_id: answerId,
+                    question_id: "{{ question.id }}"
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    window.location.reload();
+                } else {
+                    alert(data.error || 'Error accepting answer');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error accepting answer');
+            });
+        });
+    });
+});
+
+function scrollToAnswerForm() {
+    document.getElementById('answerFormSection').scrollIntoView({
+        behavior: 'smooth'
+    });
+    document.getElementById('answerContent').focus();
+}
+</script>
+
+<style>
+    .vote-btn {
+        width: 30px;
+        height: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0;
+    }
+    .vote-count {
+        font-weight: bold;
+    }
+    .answer-content {
+        white-space: pre-line;
+    }
+    .accept-answer {
+        background: none;
+        border: none;
+        color: #6c757d;
+        padding: 0;
+    }
+    .accept-answer:hover {
+        color: #198754;
+    }
+</style>
+{% endblock %}

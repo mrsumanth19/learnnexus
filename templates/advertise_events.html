@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campus Events & Announcements</title>
+    <style>
+        :root {
+            --primary: #4361ee;
+            --secondary: #3f37c9;
+            --success: #4cc9f0;
+            --urgent: #e63946;
+            --light: #f8f9fa;
+            --dark: #212529;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background-color: #f0f2f5;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+        
+        .filters {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .filter-btn {
+            padding: 8px 16px;
+            background-color: var(--light);
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .filter-btn:hover {
+            background-color: #e9ecef;
+        }
+        
+        .filter-btn.active {
+            background-color: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+        
+        .urgent-events {
+            background-color: #fef2f2;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            border-left: 4px solid var(--urgent);
+        }
+        
+        .urgent-title {
+            color: var(--urgent);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .urgent-icon {
+            width: 24px;
+            height: 24px;
+            color: var(--urgent);
+        }
+        
+        .events-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .event-card {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .event-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .event-image {
+            height: 180px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .event-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .event-tag {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .blood-donation .event-tag {
+            background-color: #e63946;
+        }
+        
+        .fest .event-tag {
+            background-color: #ff9f1c;
+        }
+        
+        .academic .event-tag {
+            background-color: #457b9d;
+        }
+        
+        .charity .event-tag {
+            background-color: #2a9d8f;
+        }
+        
+        .cultural .event-tag {
+            background-color: #8338ec;
+        }
+        
+        .sports .event-tag {
+            background-color: #06d6a0;
+        }
+        
+        .event-content {
+            padding: 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .event-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin: 0 0 10px 0;
+            color: var(--dark);
+        }
+        
+        .event-date, .event-location {
+            font-size: 14px;
+            color: #666;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-bottom: 5px;
+        }
+        
+        .event-description {
+            margin: 15px 0;
+            color: #444;
+            flex-grow: 1;
+        }
+        
+        .event-footer {
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .event-organizer {
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .event-link {
+            padding: 8px 16px;
+            background-color: var(--primary);
+            color: white;
+            border-radius: 4px;
+            text-decoration: none;
+            font-size: 14px;
+            transition: background-color 0.3s;
+        }
+        
+        .event-link:hover {
+            background-color: var(--secondary);
+        }
+        
+        .add-event-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            text-decoration: none;
+            font-size: 24px;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+        
+        .add-event-btn:hover {
+            background-color: var(--secondary);
+            transform: scale(1.05);
+        }
+        
+        .no-events {
+            text-align: center;
+            grid-column: 1 / -1;
+            padding: 40px;
+            background-color: white;
+            border-radius: 8px;
+        }
+        
+        @media (max-width: 768px) {
+            .events-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .event-image {
+                height: 160px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Campus Events & Announcements</h1>
+            <p>Stay informed about the latest events, fests, and important announcements</p>
+        </header>
+        
+        <div class="filters">
+            <button class="filter-btn active" data-filter="all">All Events</button>
+            <button class="filter-btn" data-filter="fest">Fests</button>
+            <button class="filter-btn" data-filter="academic">Academic</button>
+            <button class="filter-btn" data-filter="cultural">Cultural</button>
+            <button class="filter-btn" data-filter="sports">Sports</button>
+            <button class="filter-btn" data-filter="blood_donation">Blood Donation</button>
+            <button class="filter-btn" data-filter="charity">Charity</button>
+        </div>
+        
+        <div id="urgent-events-container" class="urgent-events" style="display: none;">
+            <h2 class="urgent-title">
+                <svg class="urgent-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                Urgent Announcements
+            </h2>
+            <div id="urgent-events-list">
+                <!-- Urgent events will be loaded here -->
+            </div>
+        </div>
+        
+        <div class="events-grid" id="events-grid">
+            <!-- Events will be loaded dynamically -->
+            <div class="no-events">
+                <h3>Loading events...</h3>
+            </div>
+        </div>
+        
+        <a href="/add_event" class="add-event-btn">+</a>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load all events initially
+            loadEvents('all');
+            
+            // Filter buttons event listeners
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Update active button
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Load filtered events
+                    const filter = this.getAttribute('data-filter');
+                    loadEvents(filter);
+                });
+            });
+        });
+        
+        function loadEvents(filter) {
+            const eventsGrid = document.getElementById('events-grid');
+            const urgentEventsContainer = document.getElementById('urgent-events-container');
+            const urgentEventsList = document.getElementById('urgent-events-list');
+            
+            // Show loading state
+            eventsGrid.innerHTML = '<div class="no-events"><h3>Loading events...</h3></div>';
+            
+            // Fetch events from the server
+            fetch(`/api/events?filter=${filter}`)
+                .then(response => response.json())
+                .then(data => {
+                    // Process urgent events
+                    const urgentEvents = data.filter(event => event.is_urgent);
+                    
+                    if (urgentEvents.length > 0) {
+                        urgentEventsContainer.style.display = 'block';
+                        urgentEventsList.innerHTML = '';
+                        
+                        urgentEvents.forEach(event => {
+                            const urgentEvent = document.createElement('div');
+                            urgentEvent.innerHTML = `
+                                <div style="margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px solid #f1aaaa;">
+                                    <h3 style="margin: 0 0 10px 0;">${event.title}</h3>
+                                    <p>${event.description}</p>
+                                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                                        <span>${formatDate(event.event_date)}</span>
+                                        <a href="${event.external_link || '#'}" target="_blank" style="color: var(--urgent); font-weight: 600;">More Info</a>
+                                    </div>
+                                </div>
+                            `;
+                            urgentEventsList.appendChild(urgentEvent);
+                        });
+                    } else {
+                        urgentEventsContainer.style.display = 'none';
+                    }
+                    
+                    // Process regular events
+                    const regularEvents = data.filter(event => !event.is_urgent);
+                    
+                    if (regularEvents.length > 0) {
+                        eventsGrid.innerHTML = '';
+                        
+                        regularEvents.forEach(event => {
+                            const eventCard = createEventCard(event);
+                            eventsGrid.appendChild(eventCard);
+                        });
+                    } else {
+                        eventsGrid.innerHTML = '<div class="no-events"><h3>No events found</h3><p>Check back later or try a different filter</p></div>';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error loading events:', error);
+                    eventsGrid.innerHTML = '<div class="no-events"><h3>Error loading events</h3><p>Please try again later</p></div>';
+                    urgentEventsContainer.style.display = 'none';
+                });
+        }
+        
+        function createEventCard(event) {
+            const eventDate = new Date(event.event_date);
+            const card = document.createElement('div');
+            card.className = `event-card ${event.event_type}`;
+            
+            // Format the date
+            const formattedDate = formatDate(event.event_date);
+            
+            card.innerHTML = `
+                <div class="event-image">
+                    <img src="${event.image_data || '/api/placeholder/300/180'}" alt="${event.title}">
+                    <div class="event-tag">${formatEventType(event.event_type)}</div>
+                </div>
+                <div class="event-content">
+                    <h3 class="event-title">${event.title}</h3>
+                    <div class="event-date">
+                        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                        </svg>
+                        ${formattedDate}
+                    </div>
+                    <div class="event-location">
+                        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                        </svg>
+                        ${event.venue}
+                    </div>
+                    <div class="event-description">
+                        ${event.description.length > 120 ? event.description.substring(0, 120) + '...' : event.description}
+                    </div>
+                    <div class="event-footer">
+                        <div class="event-organizer">By: ${event.organizer}</div>
+                        <a href="${event.external_link || '#'}" target="_blank" class="event-link">More Info</a>
+                    </div>
+                </div>
+            `;
+            
+            return card;
+        }
+        
+        function formatDate(dateString) {
+            const options = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' };
+            return new Date(dateString).toLocaleDateString('en-US', options);
+        }
+        
+        function formatEventType(type) {
+            return type.replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase());
+        }
+        
+    </script>
+</body>
+</html>

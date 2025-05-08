@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript Learning Roadmap</title>
+    <style>
+        :root {
+            --primary: #4361ee;
+            --primary-light: #4895ef;
+            --secondary: #3f37c9;
+            --success: #4cc9f0;
+            --dark: #343a40;
+            --light: #f8f9fa;
+            --danger: #e63946;
+            --warning: #ffd166;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 20px;
+            background-color: var(--primary);
+            color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            margin: 0;
+            font-size: 2.5rem;
+        }
+        
+        .progress-container {
+            margin: 20px 0 40px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .progress-bar {
+            height: 30px;
+            background-color: #e9ecef;
+            border-radius: 5px;
+            margin-top: 10px;
+            overflow: hidden;
+        }
+        
+        .progress {
+            height: 100%;
+            background-color: var(--primary);
+            transition: width 0.5s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+        
+        .section {
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        h2 {
+            color: var(--primary);
+            border-bottom: 2px solid var(--primary-light);
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+        
+        .topic-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        
+        .topic-item {
+            padding: 12px 15px;
+            margin: 8px 0;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+        
+        .topic-item:hover {
+            background-color: #e9ecef;
+        }
+        
+        .topic-item.completed {
+            background-color: #e8f4f8;
+            border-left: 4px solid var(--success);
+        }
+        
+        .checkbox {
+            margin-right: 12px;
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+        
+        .section-progress {
+            font-size: 0.9rem;
+            color: var(--dark);
+            margin-top: 5px;
+            font-weight: bold;
+        }
+        
+        .save-btn {
+            display: block;
+            margin: 20px auto;
+            padding: 12px 25px;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        
+        .save-btn:hover {
+            background-color: var(--secondary);
+        }
+        
+        .reset-btn {
+            display: block;
+            margin: 10px auto;
+            padding: 8px 20px;
+            background-color: var(--danger);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        
+        .reset-btn:hover {
+            background-color: #c1121f;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .section {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>JavaScript Learning Roadmap</h1>
+        <p>Track your progress through the complete JavaScript learning journey</p>
+    </header>
+    
+    <div class="progress-container">
+        <h2>Overall Progress</h2>
+        <div class="progress-bar">
+            <div class="progress" id="total-progress">0%</div>
+        </div>
+    </div>
+    
+    <div class="section" id="fundamentals">
+        <h2>1. JavaScript Fundamentals</h2>
+        <div class="section-progress">Completed: <span id="fundamentals-progress">0/9</span></div>
+        <ul class="topic-list">
+            <li class="topic-item"><input type="checkbox" class="checkbox"><span>Basic syntax and data types</span></li>
+            <li class="topic-item"><input type="checkbox" class="checkbox"><span>Variables and constants (var, let, const)</span></li>
+            <li class="topic-item"><input type="checkbox" class="checkbox"><span>Operators and expressions</span></li>
+            <li class="topic-item"><input type="checkbox" class="checkbox"><span>Control flow (if/else, switch, loops)</span></li>
+            <li class="topic-item"><input type="checkbox" class="checkbox"><span>Functions (declarations, expressions, arrow functions)</span></li>
+            <li class="topic-item"><input type="checkbox" class="checkbox"><span>Arrays and array methods</span></li>
+            <li class="topic-item"><input type="checkbox" class="checkbox"><span>Objects and object methods</span></li>
+            <li class="topic-item"><input type="checkbox" class="checkbox"><span>String manipulation and methods</span></li>
+            <li class="topic-item"><input type="checkbox" class="checkbox"><span>Basic DOM manipulation</span></li>
+        </ul>
+    </div>
+    
+    <div class="section" id="intermediate">
+        <h2>2. Intermediate JavaScript</h2>
+        <div class="section-progress">Completed: <span id="intermediate-progress">0/10</span></div>
+        <ul class="topic-list">
+            <li class="topic-item"><input type="checkbox" class="checkbox"><span>Scope and closures</span></li>
+            <li class="topic-item"><input type="checkbox" class="checkbox"><span>Hoisting and temporal dead zone</span></li>
+            <li class="topic-item"><input type="checkbox" class="checkbox"><span>"this" keyword and context</span></li>
+            <li class="topic-item"><input type="checkbox" class="checkbox"><span>Object-oriented programming (OOP)</span></li>
+            <li class="topic-item"><input type="checkbox" class="checkbox"><span>Prototypes and prototypal inheritance</span></li>
+            <li class="topic-item"><input type="checkbox" class="checkbox"><span>ES6+ features (destructuring, spread/rest, template literals)</span></li>
+            <li class="topic-item"><input type="checkbox" class="checkbox"><span>Promises and asynchronous programming</span></li>
+            <li class="topic-item"><input type="checkbox" class="checkbox"><span>Error handling (try/catch)</span></li>
+            <li class="topic-item"><input type="checkbox" class="checkbox"><span>Event handling and delegation</span></li>
+            <li class="topic-item"><input type="checkbox" class="checkbox"><span>JSON parsing and serialization</span></li>
+        </ul>
+    </div>
+    
+    <div class="section" id="advanced">
+        <h2>3. Advanced JavaScript</h2>
+        <div class="section-progress">Completed: <span id="advanced-progress">0/10</span></div>
+        <ul class="topic-list">
+            <li class="topic-item"><input type="checkbox" class="checkbox"><span>Functional programming concepts</span></li>
+            <li class="topic-item"><input type="checkbox" class="checkbox"><span>Higher-order functions and callbacks</span></li>
+            <li class="topic-item"><input type="checkbox" class="checkbox"><span>Async/await</span></li>
+            <li class="topic-item"><input type="checkbox" class="checkbox"><span>Generators and iterators</span></li>
+            <li class="topic-item"><input type="checkbox" class="checkbox"><span>Regular expressions</span></li>
+            <li class="topic-item"><input type="checkbox" class="checkbox"><span>Memory management and garbage collection</span></li>
+            <li class="topic-item"><input type="checkbox" class="checkbox"><span>Event loop and JavaScript runtime</span></li>
+            <li class="topic-item"><input type="checkbox" class="checkbox"><span>Web APIs (Fetch, LocalStorage, etc.)</span></li>
+            <li class="topic-item"><input type="checkbox" class="checkbox"><span>Modules (CommonJS, ES Modules)</span></li>
+            <li class="topic-item"><input type="checkbox" class="checkbox"><span>Design patterns in JavaScript</span></li>
+        </ul>
+    </div>
+    
+    <div class="section" id="frameworks">
+        <h2>4. Frameworks & Libraries</h2>
+        <div class="section-progress">Completed: <span id="frameworks-progress">0/7</span></div>
+        <ul class="topic-list">
+            <li class="topic-item"><input type="checkbox" class="checkbox"><span>Frontend frameworks (React, Vue, Angular, Svelte)</span></li>
+            <li class="topic-item"><input type="checkbox" class="checkbox"><span>State management (Redux, Context API, Vuex)</span></li>
+            <li class="topic-item"><input type="checkbox" class="checkbox"><span>Backend with Node.js and Express</span></li>
+            <li class="topic-item"><input type="checkbox" class="checkbox"><span>Testing libraries (Jest, Mocha, Cypress)</span></li>
+            <li class="topic-item"><input type="checkbox" class="checkbox"><span>Build tools (Webpack, Vite, Rollup)</span></li>
+            <li class="topic-item"><input type="checkbox" class="checkbox"><span>CSS-in-JS libraries</span></li>
+            <li class="topic-item"><input type="checkbox" class="checkbox"><span>UI component libraries</span></li>
+        </ul>
+    </div>
+    
+    <div class="section" id="advanced-concepts">
+        <h2>5. Advanced Concepts</h2>
+        <div class="section-progress">Completed: <span id="advanced-concepts-progress">0/10</span></div>
+        <ul class="topic-list">
+            <li class="topic-item"><input type="checkbox" class="checkbox"><span>TypeScript fundamentals</span></li>
+            <li class="topic-item"><input type="checkbox" class="checkbox"><span>Server-side rendering (SSR)</span></li>
+            <li class="topic-item"><input type="checkbox" class="checkbox"><span>Static site generation (SSG)</span></li>
+            <li class="topic-item"><input type="checkbox" class="checkbox"><span>Progressive Web Apps (PWAs)</span></li>
+            <li class="topic-item"><input type="checkbox" class="checkbox"><span>Web Components</span></li>
+            <li class="topic-item"><input type="checkbox" class="checkbox"><span>WebSockets for real-time applications</span></li>
+            <li class="topic-item"><input type="checkbox" class="checkbox"><span>Performance optimization techniques</span></li>
+            <li class="topic-item"><input type="checkbox" class="checkbox"><span>Security best practices</span></li>
+            <li class="topic-item"><input type="checkbox" class="checkbox"><span>Accessibility standards</span></li>
+            <li class="topic-item"><input type="checkbox" class="checkbox"><span>Web Assembly integration</span></li>
+        </ul>
+    </div>
+    
+    <div class="section" id="specialized">
+        <h2>6. Specialized Skills</h2>
+        <div class="section-progress">Completed: <span id="specialized-progress">0/8</span></div>
+        <ul class="topic-list">
+            <li class="topic-item"><input type="checkbox" class="checkbox"><span>Mobile development with JavaScript (React Native, Ionic)</span></li>
+            <li class="topic-item"><input type="checkbox" class="checkbox"><span>Desktop applications (Electron)</span></li>
+            <li class="topic-item"><input type="checkbox" class="checkbox"><span>Data visualization (D3.js, Chart.js)</span></li>
+            <li class="topic-item"><input type="checkbox" class="checkbox"><span>Game development with JavaScript</span></li>
+            <li class="topic-item"><input type="checkbox" class="checkbox"><span>API design and development</span></li>
+            <li class="topic-item"><input type="checkbox" class="checkbox"><span>Serverless architecture</span></li>
+            <li class="topic-item"><input type="checkbox" class="checkbox"><span>Blockchain/Web3 development</span></li>
+            <li class="topic-item"><input type="checkbox" class="checkbox"><span>AI/ML with JavaScript (TensorFlow.js)</span></li>
+        </ul>
+    </div>
+    
+    <div class="section" id="projects">
+        <h2>7. Practical Projects</h2>
+        <div class="section-progress">Completed: <span id="projects-progress">0/8</span></div>
+        <ul class="topic-list">
+            <li class="topic-item"><input type="checkbox" class="checkbox"><span>Interactive webpage with DOM manipulation</span></li>
+            <li class="topic-item"><input type="checkbox" class="checkbox"><span>To-do list application</span></li>
+            <li class="topic-item"><input type="checkbox" class="checkbox"><span>Weather app using APIs</span></li>
+            <li class="topic-item"><input type="checkbox" class="checkbox"><span>E-commerce site with cart functionality</span></li>
+            <li class="topic-item"><input type="checkbox" class="checkbox"><span>Real-time chat application</span></li>
+            <li class="topic-item"><input type="checkbox" class="checkbox"><span>Full-stack CRUD application</span></li>
+            <li class="topic-item"><input type="checkbox" class="checkbox"><span>Social media clone</span></li>
+            <li class="topic-item"><input type="checkbox" class="checkbox"><span>Portfolio website with animations and interactions</span></li>
+        </ul>
+    </div>
+    
+    <button class="save-btn" id="save-progress">Save Progress</button>
+    <button class="reset-btn" id="reset-progress">Reset Progress</button>
+    
+    <footer>
+        <p>Your progress is automatically saved to your browser's local storage.</p>
+    </footer>
+    
+    <script>
+        // DOM Elements
+        const allCheckboxes = document.querySelectorAll('.checkbox');
+        const saveBtn = document.getElementById('save-progress');
+        const resetBtn = document.getElementById('reset-progress');
+        const totalProgressBar = document.getElementById('total-progress');
+        
+        // Section progress elements
+        const sectionProgressMap = {
+            'fundamentals': document.getElementById('fundamentals-progress'),
+            'intermediate': document.getElementById('intermediate-progress'),
+            'advanced': document.getElementById('advanced-progress'),
+            'frameworks': document.getElementById('frameworks-progress'),
+            'advanced-concepts': document.getElementById('advanced-concepts-progress'),
+            'specialized': document.getElementById('specialized-progress'),
+            'projects': document.getElementById('projects-progress')
+        };
+        
+        // Section total items
+        const sectionTotals = {
+            'fundamentals': 9,
+            'intermediate': 10,
+            'advanced': 10,
+            'frameworks': 7,
+            'advanced-concepts': 10,
+            'specialized': 8,
+            'projects': 8
+        };
+        
+        // Initialize the progress tracking
+        function initProgress() {
+            // Try to load saved progress from localStorage
+            const savedProgress = localStorage.getItem('jsRoadmapProgress');
+            
+            if (savedProgress) {
+                const checkedIndexes = JSON.parse(savedProgress);
+                
+                // Apply saved checkboxes
+                allCheckboxes.forEach((checkbox, index) => {
+                    if (checkedIndexes.includes(index)) {
+                        checkbox.checked = true;
+                        checkbox.parentElement.classList.add('completed');
+                    }
+                });
+            }
+            
+            // Add event listeners to all checkboxes
+            allCheckboxes.forEach((checkbox, index) => {
+                checkbox.addEventListener('change', function() {
+                    if (this.checked) {
+                        this.parentElement.classList.add('completed');
+                    } else {
+                        this.parentElement.classList.remove('completed');
+                    }
+                    updateProgress();
+                });
+            });
+            
+            // Initial progress update
+            updateProgress();
+            
+            // Save button event listener
+            saveBtn.addEventListener('click', saveProgress);
+            
+            // Reset button event listener
+            resetBtn.addEventListener('click', resetProgress);
+        }
+        
+        // Update progress indicators
+        function updateProgress() {
+            // Update section progress
+            for (const section in sectionProgressMap) {
+                const sectionElement = document.getElementById(section);
+                const checkboxes = sectionElement.querySelectorAll('.checkbox');
+                const checkedCount = Array.from(checkboxes).filter(checkbox => checkbox.checked).length;
+                const totalCount = checkboxes.length;
+                
+                sectionProgressMap[section].textContent = `${checkedCount}/${totalCount}`;
+            }
+            
+            // Update total progress
+            const totalChecked = Array.from(allCheckboxes).filter(checkbox => checkbox.checked).length;
+            const totalItems = allCheckboxes.length;
+            const progressPercentage = Math.round((totalChecked / totalItems) * 100);
+            
+            totalProgressBar.style.width = `${progressPercentage}%`;
+            totalProgressBar.textContent = `${progressPercentage}%`;
+        }
+        
+        // Save progress to localStorage
+        function saveProgress() {
+            const checkedIndexes = [];
+            
+            allCheckboxes.forEach((checkbox, index) => {
+                if (checkbox.checked) {
+                    checkedIndexes.push(index);
+                }
+            });
+            
+            localStorage.setItem('jsRoadmapProgress', JSON.stringify(checkedIndexes));
+            alert('Progress saved successfully!');
+        }
+        
+        // Reset all progress
+        function resetProgress() {
+            if (confirm('Are you sure you want to reset all progress?')) {
+                // Uncheck all checkboxes
+                allCheckboxes.forEach(checkbox => {
+                    checkbox.checked = false;
+                    checkbox.parentElement.classList.remove('completed');
+                });
+                
+                // Update progress display
+                updateProgress();
+                
+                // Clear localStorage
+                localStorage.removeItem('jsRoadmapProgress');
+                
+                alert('Progress has been reset.');
+            }
+        }
+        
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', initProgress);
+    </script>
+</body>
+</html>

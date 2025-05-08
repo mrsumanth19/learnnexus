@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Form</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            background-color: #ffffff;
+            width: 100%;
+            max-width: 450px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .logout-option {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            z-index: 10;
+            font-size: 14px;
+        }
+        
+        .logout-option a {
+            color: white;
+            text-decoration: none;
+            opacity: 0.8;
+            transition: opacity 0.3s ease;
+        }
+        
+        .logout-option a:hover {
+            opacity: 1;
+            text-decoration: underline;
+        }
+        
+        .header {
+            background-color: #4361ee;
+            color: white;
+            padding: 25px 20px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 24px;
+            font-weight: 600;
+        }
+        
+        .header p {
+            margin-top: 8px;
+            opacity: 0.8;
+            font-size: 14px;
+        }
+        
+        .form-container {
+            padding: 30px 25px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #333;
+            font-size: 14px;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border-radius: 6px;
+            border: 1px solid #ddd;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+        
+        .form-control:focus {
+            border-color: #4361ee;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+        }
+        
+        .btn {
+            width: 100%;
+            padding: 14px;
+            background-color: #4361ee;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        
+        .btn:hover {
+            background-color: #3a56d4;
+        }
+        
+        .form-footer {
+            text-align: center;
+            margin-top: 25px;
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .form-footer a {
+            color: #4361ee;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .form-footer a:hover {
+            text-decoration: underline;
+        }
+        
+        .remember-forgot {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .remember-me {
+            display: flex;
+            align-items: center;
+        }
+        
+        .remember-me input {
+            margin-right: 8px;
+        }
+        
+        .forgot-password {
+            color: #4361ee;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        .forgot-password:hover {
+            text-decoration: underline;
+        }
+        
+        /* Status message for logged in users */
+        .user-status {
+            background-color: rgba(0, 0, 0, 0.05);
+            padding: 10px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            text-align: center;
+            display: none; /* Hidden by default, shown via JavaScript */
+        }
+        
+        @media (max-width: 500px) {
+            .container {
+                border-radius: 0;
+                box-shadow: none;
+            }
+            
+            .form-container {
+                padding: 20px 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logout-option">
+                <a href="/logout" id="logout-link">Logout</a>
+            </div>
+            <h1>Welcome Back</h1>
+            <p>Please log in to your account</p>
+        </div>
+        <div class="form-container">
+            <!-- Status message for already logged in users -->
+            <div class="user-status" id="user-status">
+                You are already logged in. <a href="/index">Go to Dashboard</a> or <a href="/logout">Logout</a>.
+            </div>
+            
+            <!-- In login.html -->
+            <form action="/login" method="POST" id="login-form">
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" class="form-control" placeholder="Enter your email address" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" class="form-control" placeholder="Enter your password" required>
+                </div>
+                
+                <div class="remember-forgot">
+                    <div class="remember-me">
+                        <input type="checkbox" id="remember" name="remember">
+                        <label for="remember">Remember me</label>
+                    </div>
+                    <a href="#" class="forgot-password">Forgot password?</a>
+                </div>
+                
+                <button type="submit" class="btn">Log In</button>
+                
+                <div class="form-footer">
+                    Don't have an account? <a href="/register">Register Now</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Check if user is logged in (check for session cookie)
+        document.addEventListener('DOMContentLoaded', function() {
+            // Simple check if a session exists
+            // This is just a frontend check - the actual session validation happens on the server
+            if (document.cookie.indexOf('session') !== -1) {
+                // Show logged in message and hide login form
+                document.getElementById('user-status').style.display = 'block';
+                document.getElementById('login-form').style.display = 'none';
+                document.getElementById('logout-link').style.display = 'block';
+            } else {
+                document.getElementById('logout-link').style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>

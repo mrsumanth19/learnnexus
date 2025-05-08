@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LearnNexus - TextGPT</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.27.0/themes/prism-okaidia.min.css" rel="stylesheet" />
+    <style>
+        /* Base styles */
+        :root {
+            --primary-color: #2563eb;
+            --primary-light: #3b82f6;
+            --primary-dark: #1e40af;
+            --gray-50: #f9fafb;
+            --gray-100: #f3f4f6;
+            --gray-200: #e5e7eb;
+            --gray-300: #d1d5db;
+            --gray-600: #4b5563;
+            --gray-700: #374151;
+            --gray-800: #1f2937;
+            --gray-900: #111827;
+            --blue-50: #eff6ff;
+            --blue-100: #dbeafe;
+            --blue-500: #3b82f6;
+            --blue-600: #2563eb;
+            --blue-700: #1d4ed8;
+            --blue-800: #1e40af;
+            --green-100: #dcfce7;
+            --green-700: #15803d;
+            --purple-100: #f3e8ff;
+            --purple-700: #7e22ce;
+            --yellow-100: #fef9c3;
+            --yellow-700: #a16207;
+            --red-100: #fee2e2;
+            --red-700: #b91c1c;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--gray-50);
+            color: var(--gray-800);
+            line-height: 1.6;
+        }
+
+        /* Navigation */
+        .navbar {
+            background: white;
+            padding: 1rem 2rem;
+            border-bottom: 1px solid var(--gray-200);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .nav-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .logo:hover {
+            color: var(--primary-dark);
+        }
+
+        .search-container {
+            flex: 1;
+            max-width: 600px;
+            margin: 0 2rem;
+            position: relative;
+        }
+
+        .search-container i {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray-600);
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 0.75rem 1rem 0.75rem 2.5rem;
+            border: 1px solid var(--gray-200);
+            border-radius: 0.5rem;
+            outline: none;
+            transition: all 0.2s;
+        }
+
+        .search-input:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px var(--blue-100);
+        }
+
+        /* Main Layout */
+        .main-container {
+            max-width: 1300px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 2rem;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            background: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            padding: 1.5rem 1rem;
+            height: fit-content;
+        }
+
+        .sidebar-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1rem;
+            color: var(--gray-700);
+            text-decoration: none;
+            border-radius: 0.375rem;
+            margin-bottom: 0.5rem;
+            transition: all 0.2s;
+            font-weight: 500;
+        }
+
+        .sidebar-item:hover {
+            background-color: var(--gray-100);
+            color: var(--primary-color);
+        }
+
+        .sidebar-item.active {
+            background-color: var(--blue-50);
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+
+        .sidebar-item i {
+            font-size: 1.2rem;
+            min-width: 1.5rem;
+            text-align: center;
+        }
+
+        /* Chat Container */
+        .chat-container {
+            background: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            height: calc(100vh - 150px);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .chat-header {
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid var(--gray-200);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .chat-title {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--gray-800);
+        }
+
+        .chat-title i {
+            color: var(--primary-color);
+            font-size: 1.5rem;
+        }
+
+        .chat-actions {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1.5rem;
+            scroll-behavior: smooth;
+        }
+
+        .message {
+            margin-bottom: 1.5rem;
+            display: flex;
+            gap: 1rem;
+            max-width: 90%;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .message.user {
+            flex-direction: row-reverse;
+            margin-left: auto;
+        }
+
+        .message-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--gray-200);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .message.user .message-avatar {
+            background: var(--primary-light);
+            color: white;
+        }
+
+        .message-content {
+            background: var(--gray-100);
+            padding: 1rem 1.25rem;
+            border-radius: 1rem;
+            border-top-left-radius: 0;
+            position: relative;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        }
+
+        .message.user .message-content {
+            background: var(--primary-color);
+            color: white;
+            border-radius: 1rem;
+            border-top-right-radius: 0;
+        }
+
+        .message-time {
+            font-size: 0.75rem;
+            color: var(--gray-600);
+            margin-top: 0.5rem;
+            text-align: right;
+        }
+
+        .message.user .message-time {
+            color: var(--gray-200);
+        }
+
+        /* Bot Response Styling */
+        .bot-response {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--gray-800);
+        }
+
+        .bot-response h1,
+        .bot-response h2,
+        .bot-response h3,
+        .bot-response h4 {
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+            color: var(--primary-dark);
+            font-weight: 600;
+        }
+
+        .bot-response h1 { font-size: 1.5rem; }
+        .bot-response h2 { font-size: 1.35rem; }
+        .bot-response h3 { font-size: 1.25rem; }
+        .bot-response h4 { font-size: 1.125rem; }
+
+        .bot-response p {
+            margin-bottom: 1rem;
+        }
+
+        .bot-response ul,
+        .bot-response ol {
+            margin-bottom: 1rem;
+            padding-left: 1.5rem;
+        }
+
+        .bot-response li {
+            margin-bottom: 0.5rem;
+        }
+
+        .bot-response pre {
+            background: var(--gray-900);
+            color: white;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+
+        .bot-response code {
+            font-family: 'Courier New', Courier, monospace;
+            background: var(--gray-100);
+            padding: 0.2rem 0.4rem;
+            border-radius: 0.25rem;
+            font-size: 0.9rem;
+            color: var(--primary-dark);
+        }
+
+        .bot-response pre code {
+            background: transparent;
+            color: white;
+            padding: 0;
+        }
+
+        .bot-response table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+
+        .bot-response th,
+        .bot-response td {
+            padding: 0.75rem;
+            border: 1px solid var(--gray-300);
+        }
+
+        .bot-response th {
+            background: var(--gray-100);
+            font-weight: 600;
+        }
+
+        .bot-response blockquote {
+            border-left: 4px solid var(--primary-color);
+            padding: 0.5rem 1rem;
+            margin: 1rem 0;
+            background: var(--blue-50);
+            border-radius: 0 0.5rem 0.5rem 0;
+        }
+
+        .bot-response a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .bot-response a:hover {
+            text-decoration: underline;
+        }
+
+        .bot-response .highlight {
+            background: var(--yellow-100);
+            padding: 0.25rem;
+            border-radius: 0.25rem;
+        }
+
+        .bot-response .note {
+            background: var(--blue-100);
+            border-left: 4px solid var(--blue-600);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0 0.5rem 0.5rem 0;
+        }
+
+        .bot-response .warning {
+            background: var(--yellow-100);
+            border-left: 4px solid var(--yellow-700);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0 0.5rem 0.5rem 0;
+        }
+
+        .bot-response .error {
+            background: var(--red-100);
+            border-left: 4px solid var(--red-700);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0 0.5rem 0.5rem 0;
+        }
+
+        .bot-response .success {
+            background: var(--green-100);
+            border-left: 4px solid var(--green-700);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0 0.5rem 0.5rem 0;
+        }
+
+        /* Chat Input */
+        .chat-input {
+            padding: 1.5rem;
+            border-top: 1px solid var(--gray-200);
+            display: flex;
+            gap: 1rem;
+            background: white;
+        }
+
+        .chat-input-container {
+            flex: 1;
+            position: relative;
+        }
+
+        .chat-input input {
+            width: 100%;
+            padding: 0.875rem 1rem;
+            border: 1px solid var(--gray-300);
+            border-radius: 0.5rem;
+            outline: none;
+            font-size: 1rem;
+            transition: all 0.2s;
+        }
+
+        .chat-input input:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px var(--blue-100);
+        }
+
+        .send-btn {
+            padding: 0.75rem 1.5rem;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.2s;
+        }
+
+        .send-btn:hover {
+            background-color: var(--primary-dark);
+        }
+
+        .send-btn i {
+            font-size: 1rem;
+        }
+
+        /* Typing indicator */
+        .typing-indicator {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1rem;
+            background: var(--gray-100);
+            border-radius: 1rem;
+            margin-bottom: 1.5rem;
+            max-width: max-content;
+        }
+
+        .typing-indicator span {
+            width: 8px;
+            height: 8px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            display: inline-block;
+            opacity: 0.4;
+        }
+
+        .typing-indicator span:nth-child(1) {
+            animation: typing 1.5s infinite 0s;
+        }
+        .typing-indicator span:nth-child(2) {
+            animation: typing 1.5s infinite 0.2s;
+        }
+        .typing-indicator span:nth-child(3) {
+            animation: typing 1.5s infinite 0.4s;
+        }
+
+        @keyframes typing {
+            0% { opacity: 0.4; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); }
+            100% { opacity: 0.4; transform: scale(1); }
+        }
+
+        /* History loader */
+        .history-loader {
+            text-align: center;
+            padding: 1rem;
+            color: var(--gray-600);
+            font-size: 0.9rem;
+        }
+
+        /* Utility classes */
+        .hidden {
+            display: none;
+        }
+
+        /* Welcome banner */
+        .welcome-banner {
+            background: var(--blue-50);
+            border-left: 4px solid var(--blue-600);
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            border-radius: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-content">
+            <a href="/" class="logo">
+                <i class="fas fa-graduation-cap"></i>
+                LearnNexus
+            </a>
+            <div class="search-container">
+                <i class="fas fa-search"></i>
+                <input type="text" class="search-input" placeholder="Search for topics, questions, or materials...">
+            </div>
+        </div>
+    </nav>
+
+    <div class="main-container">
+        <!-- Left Sidebar -->
+        <div class="sidebar">
+            <a href="/campus_events" class="sidebar-item">
+                <i class="fas fa-calendar-alt"></i>
+                Advertise & Events
+            </a>
+            <a href="/roadmap" class="sidebar-item">
+                <i class="fas fa-map"></i>
+                Roadmap
+            </a>
+            <a href="#" class="sidebar-item">
+                <i class="fas fa-comments"></i>
+                Q&A Forum
+            </a>
+            <a href="/upload" class="sidebar-item">
+                <i class="fas fa-upload"></i>
+                Upload & Download
+            </a>
+            <a href="/textgpt" class="sidebar-item active">
+                <i class="fas fa-robot"></i>
+                TextGPT
+            </a>
+        </div>
+
+        <!-- Chat Interface -->
+        <div class="chat-container">
+            <div class="chat-header">
+                <div class="chat-title">
+                    <i class="fas fa-robot"></i>
+                    TextGPT Assistant
+                </div>
+                <div class="chat-actions">
+                    <button class="btn-ghost" id="clearChat" title="Clear Chat">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="chat-messages" id="chatMessages">
+                <div id="historyLoader" class="history-loader">
+                    <i class="fas fa-spinner fa-spin"></i> Loading your conversation history...
+                </div>
+            </div>
+            <div class="chat-input">
+                <div class="chat-input-container">
+                    <input type="text" id="userInput" placeholder="Type your message here...">
+                </div>
+                <button onclick="sendMessage()" class="send-btn">
+                    <i class="fas fa-paper-plane"></i> Send
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.27.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.27.0/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.27.0/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.27.0/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.27.0/components/prism-css.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.27.0/components/prism-html.min.js"></script>
+    <script>
+        // Load chat history when the page loads
+        document.addEventListener('DOMContentLoaded', loadChatHistory);
+
+        function loadChatHistory() {
+            // Show history loader
+            const messagesDiv = document.getElementById('chatMessages');
+            
+            // Fetch chat history from server
+            fetch('/api/chat-history')
+                .then(response => response.json())
+                .then(data => {
+                    // Remove loader
+                    const loader = document.getElementById('historyLoader');
+                    if (loader) {
+                        loader.remove();
+                    }
+                    
+                    // Check if we have any history
+                    if (data.length > 0) {
+                        // Add history items
+                        data.forEach(item => {
+                            addMessage(item.user_message, true, formatTimestamp(item.created_at));
+                            addMessage(item.bot_response, false, formatTimestamp(item.created_at));
+                        });
+                        
+                        // Apply syntax highlighting
+                        Prism.highlightAll();
+                        
+                        // Scroll to bottom
+                        messagesDiv.scrollTop = messagesDiv.scrollHeight;
+                    } else {
+                        // Show welcome message if no history
+                        showWelcomeMessage();
+                    }
+                })
+                .catch(error => {
+                    console.error('Error loading chat history:', error);
+                    
+                    // Remove loader
+                    const loader = document.getElementById('historyLoader');
+                    if (loader) {
+                        loader.remove();
+                    }
+                    
+                    // Show welcome message on error
+                    showWelcomeMessage();
+                });
+        }
+        
+        function showWelcomeMessage() {
+            const messagesDiv = document.getElementById('chatMessages');
+            const welcomeDiv = document.createElement('div');
+            welcomeDiv.className = 'message';
+            welcomeDiv.innerHTML = `
+                <div class="message-avatar">
+                    <i class="fas fa-robot"></i>
+                </div>
+                <div class="message-content">
+                    <div class="bot-response">
+                        <h3>Welcome to TextGPT! 👋</h3>
+                        <p>I'm your AI learning assistant, ready to help with:</p>
+                        <ul>
+                            <li>Answering questions about programming and technology</li>
+                            <li>Explaining complex concepts in simple terms</li>
+                            <li>Providing code examples and explanations</li>
+                            <li>Helping with research and learning resources</li>
+                        </ul>
+                        <p>What would you like to learn about today?</p>
+                    </div>
+                    <div class="message-time">Just now</div>
+                </div>
+            `;
+            messagesDiv.appendChild(welcomeDiv);
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('userInput');
+            const message = input.value.trim();
+            
+            if (!message) return;
+
+            // Add user message to chat
+            addMessage(message, true);
+            
+            // Clear input
+            input.value = '';
+
+            // Show typing indicator
+            showTypingIndicator();
+
+            // Make API call to backend
+            fetch('/api/chat', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ message: message })
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Hide typing indicator
+                hideTypingIndicator();
+                
+                // Add bot response to chat
+                addMessage(data.response, false);
+                
+                // Apply syntax highlighting to code blocks
+                Prism.highlightAll();
+            })
+            .catch(error => {
+                // Hide typing indicator
+                hideTypingIndicator();
+                
+                console.error('Error:', error);
+                addMessage('Sorry, I encountered an error. Please try again.', false);
+            });
+        }
+
+        function addMessage(text, isUser, timestamp = null) {
+            const messagesDiv = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${isUser ? 'user' : ''}`;
+            
+            // Format the time - use provided timestamp or current time
+            let timeString;
+            if (timestamp) {
+                timeString = timestamp;
+            } else {
+                const now = new Date();
+                const hours = now.getHours().toString().padStart(2, '0');
+                const minutes = now.getMinutes().toString().padStart(2, '0');
+                timeString = `${hours}:${minutes}`;
+            }
+            
+            // Process the bot response - format code blocks
+            let processedText = text;
+            if (!isUser) {
+                // Replace markdown code blocks with syntax highlighted blocks
+                processedText = formatMarkdown(text);
+            }
+            
+            messageDiv.innerHTML = `
+                <div class="message-avatar">
+                    <i class="${isUser ? 'fas fa-user' : 'fas fa-robot'}"></i>
+                </div>
+                <div class="message-content">
+                    ${isUser ? text : `<div class="bot-response">${processedText}</div>`}
+                    <div class="message-time">${timeString}</div>
+                </div>
+            `;
+            
+            messagesDiv.appendChild(messageDiv);
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        }
+
+        function formatMarkdown(text) {
+            // Replace markdown code blocks with syntax highlighted pre>code blocks
+            return text.replace(/```(\w+)?\n([\s\S]*?)```/g, function(match, lang, code) {
+                const language = lang || 'plaintext';
+                return `<pre><code class="language-${language}">${code.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</code></pre>`;
+            })
+            // Handle inline code
+            .replace(/`([^`]+)`/g, '<code>$1</code>')
+            // Format lists
+            .replace(/^\s*[-*+]\s+(.+)$/gm, '<li>$1</li>').replace(/(<li>.*<\/li>)/s, '<ul>$1</ul>')
+            // Format headers (h3)
+            .replace(/^###\s+(.+)$/gm, '<h3>$1</h3>')
+            // Format headers (h2)
+            .replace(/^##\s+(.+)$/gm, '<h2>$1</h2>')
+            // Format headers (h1)
+            .replace(/^#\s+(.+)$/gm, '<h1>$1</h1>')
+            // Format bold text
+            .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
+            // Format italic text
+            .replace(/\*([^*]+)\*/g, '<em>$1</em>')
+            // Format links
+            .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank">$1</a>')
+            // Format paragraphs (preserve existing HTML tags)
+            .replace(/(?:^|\n)((?!<[h|u|o|p|b])[^\n]+)(?:\n|$)/g, function(match, p1) {
+                // Skip if the text already starts with an HTML tag
+                if (p1.trim().startsWith('<') && !p1.trim().startsWith('<code')) {
+                    return '\n' + p1 + '\n';
+                }
+                return '\n<p>' + p1 + '</p>\n';
+            });
+        }
+
+        function formatTimestamp(timestamp) {
+            // Format timestamp for display
+            const date = new Date(timestamp);
+            const hours = date.getHours().toString().padStart(2, '0');
+            const minutes = date.getMinutes().toString().padStart(2, '0');
+            return `${hours}:${minutes}`;
+        }
+
+        function showTypingIndicator() {
+            const messagesDiv = document.getElementById('chatMessages');
+            const typingDiv = document.createElement('div');
+            typingDiv.id = 'typingIndicator';
+            typingDiv.className = 'typing-indicator';
+            typingDiv.innerHTML = `
+                <span></span>
+                <span></span>
+                <span></span>
+            `;
+            messagesDiv.appendChild(typingDiv);
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        }
+
+        function hideTypingIndicator() {
+            const typingIndicator = document.getElementById('typingIndicator');
+            if (typingIndicator) {
+                typingIndicator.remove();
+            }
+        }
+
+        // Handle Enter key
+        document.getElementById('userInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+
+        // Clear chat
+        document.getElementById('clearChat').addEventListener('click', function() {
+            if (confirm('Are you sure you want to clear the chat display? This won\'t delete your conversation history from the database.')) {
+                const messagesDiv = document.getElementById('chatMessages');
+                // Clear all messages
+                messagesDiv.innerHTML = '';
+                // Show welcome message
+                showWelcomeMessage();
+            }
+        });
+    </script>
+</body>
+</html>

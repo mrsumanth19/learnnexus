@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LearnNexus - A Collaborative Learning Platform</title>
+    <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#4461F2',
+                        secondary: '#6B4EFF'
+                    },
+                    borderRadius: {
+                        'none': '0px',
+                        'sm': '4px',
+                        DEFAULT: '8px',
+                        'md': '12px',
+                        'lg': '16px',
+                        'xl': '20px',
+                        '2xl': '24px',
+                        '3xl': '32px',
+                        'full': '9999px',
+                        'button': '8px'
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet">
+    <style>
+        /* Base styling */
+        :where([class^="ri-"])::before { content: "\f3c2"; }
+        body {
+            scroll-behavior: smooth;
+        }
+
+        /* Animations */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes slideInLeft {
+            from { transform: translateX(-100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        @keyframes slideInRight {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        /* Animation classes */
+        .float { animation: float 6s ease-in-out infinite; }
+        .pulse { animation: pulse 3s ease-in-out infinite; }
+        .fade-in { opacity: 0; animation: fadeIn 1s forwards; }
+        .slide-in-left { animation: slideInLeft 0.5s forwards; }
+        .slide-in-right { animation: slideInRight 0.5s forwards; }
+        .rotate { animation: rotate 2s linear infinite; }
+        .bounce { animation: bounce 2s ease-in-out infinite; }
+
+        /* Animation delays */
+        .delay-1 { animation-delay: 0.2s; }
+        .delay-2 { animation-delay: 0.4s; }
+        .delay-3 { animation-delay: 0.6s; }
+        
+        /* Menu animations */
+        .menu-item {
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        .menu-item::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: #4461F2;
+            transition: width 0.3s ease;
+        }
+        .menu-item:hover::after {
+            width: 100%;
+        }
+        
+        /* Mobile menu animations */
+        .mobile-menu-enter {
+            transform: translateX(100%);
+        }
+        .mobile-menu-enter-active {
+            transform: translateX(0);
+            transition: transform 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+        .mobile-menu-exit {
+            transform: translateX(0);
+        }
+        .mobile-menu-exit-active {
+            transform: translateX(100%);
+            transition: transform 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+        
+        /* Sidebar animations */
+        .sidebar {
+            transition: transform 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+        .sidebar-overlay {
+            background: rgba(0, 0, 0, 0.5);
+            transition: opacity 0.3s ease;
+        }
+        
+        /* Typewriter effect */
+        .typewriter {
+            overflow: hidden;
+            border-right: .15em solid transparent;
+            white-space: nowrap;
+            animation: typing 3.5s steps(40, end), blink-caret .75s step-end infinite;
+        }
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: #4461F2 }
+        }
+        
+        /* Other styles */
+        .glass {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        input:focus {
+            outline: none;
+        }
+        .custom-checkbox {
+            appearance: none;
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #d1d5db;
+            border-radius: 4px;
+            outline: none;
+            cursor: pointer;
+            position: relative;
+        }
+        .custom-checkbox:checked {
+            background-color: #4461F2;
+            border-color: #4461F2;
+        }
+        .custom-checkbox:checked::after {
+            content: "";
+            position: absolute;
+            left: 6px;
+            top: 2px;
+            width: 5px;
+            height: 10px;
+            border: solid white;
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, #f5f7ff 0%, #eef1ff 100%);
+        }
+        .btn-hover:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px -5px rgba(68, 97, 242, 0.3);
+        }
+        
+        /* Hamburger menu animation */
+        .hamburger {
+            width: 24px;
+            height: 18px;
+            position: relative;
+            cursor: pointer;
+        }
+        .hamburger span {
+            display: block;
+            position: absolute;
+            height: 2px;
+            width: 100%;
+            background: #374151;
+            border-radius: 2px;
+            opacity: 1;
+            left: 0;
+            transform: rotate(0deg);
+            transition: .25s ease-in-out;
+        }
+        .hamburger span:nth-child(1) { top: 0px; }
+        .hamburger span:nth-child(2) { top: 8px; }
+        .hamburger span:nth-child(3) { top: 16px; }
+        .hamburger.open span:nth-child(1) {
+            top: 8px;
+            transform: rotate(135deg);
+        }
+        .hamburger.open span:nth-child(2) {
+            opacity: 0;
+            left: -60px;
+        }
+        .hamburger.open span:nth-child(3) {
+            top: 8px;
+            transform: rotate(-135deg);
+        }
+    </style>
+</head>
+<body class="gradient-bg min-h-screen flex">
+    <!-- Sidebar Overlay -->
+    <div id="sidebarOverlay" class="fixed inset-0 bg-black bg-opacity-50 z-40 hidden md:hidden sidebar-overlay opacity-0"></div>
+
+    <!-- Sidebar -->
+    <aside id="sidebar" class="w-64 bg-white h-screen fixed left-0 top-0 shadow-lg z-50 sidebar transform -translate-x-full md:translate-x-0">
+        <div class="p-6">
+            <div class="flex items-center mb-8">
+                <div class="w-10 h-10 bg-primary rounded-full flex items-center justify-center mr-3 pulse">
+                    <i class="ri-brain-line text-white text-xl"></i>
+                </div>
+                <h1 class="text-xl font-['Pacifico'] text-primary">Learn Nexus</h1>
+            </div>
+            <nav>
+                <ul class="space-y-4">
+                    <li>
+                        <a href="#" class="flex items-center space-x-3 text-gray-600 hover:text-primary p-2 rounded-lg hover:bg-gray-50 transition-all duration-300 sidebar-link">
+                            <div class="w-8 h-8 flex items-center justify-center">
+                                <i class="ri-home-line text-xl"></i>
+                            </div>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="flex items-center space-x-3 text-gray-600 hover:text-primary p-2 rounded-lg hover:bg-gray-50 transition-all duration-300 sidebar-link">
+                            <div class="w-8 h-8 flex items-center justify-center">
+                                <i class="ri-book-open-line text-xl"></i>
+                            </div>
+                            <span>My Courses</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="flex items-center space-x-3 text-gray-600 hover:text-primary p-2 rounded-lg hover:bg-gray-50 transition-all duration-300 sidebar-link">
+                            <div class="w-8 h-8 flex items-center justify-center">
+                                <i class="ri-team-line text-xl"></i>
+                            </div>
+                            <span>Study Groups</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="flex items-center space-x-3 text-gray-600 hover:text-primary p-2 rounded-lg hover:bg-gray-50 transition-all duration-300 sidebar-link">
+                            <div class="w-8 h-8 flex items-center justify-center">
+                                <i class="ri-calendar-line text-xl"></i>
+                            </div>
+                            <span>Schedule</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="flex items-center space-x-3 text-gray-600 hover:text-primary p-2 rounded-lg hover:bg-gray-50 transition-all duration-300 sidebar-link">
+                            <div class="w-8 h-8 flex items-center justify-center">
+                                <i class="ri-file-list-3-line text-xl"></i>
+                            </div>
+                            <span>Resources</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="flex items-center space-x-3 text-gray-600 hover:text-primary p-2 rounded-lg hover:bg-gray-50 transition-all duration-300 sidebar-link">
+                            <div class="w-8 h-8 flex items-center justify-center">
+                                <i class="ri-message-3-line text-xl"></i>
+                            </div>
+                            <span>Messages</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="flex items-center space-x-3 text-gray-600 hover:text-primary p-2 rounded-lg hover:bg-gray-50 transition-all duration-300 sidebar-link">
+                            <div class="w-8 h-8 flex items-center justify-center">
+                                <i class="ri-settings-3-line text-xl"></i>
+                            </div>
+                            <span>Settings</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+        <div class="absolute bottom-0 left-0 right-0 p-6 border-t">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-full bg-gray-200 overflow-hidden">
+                    <img src="https://readdy.ai/api/placeholder/100/100" alt="Profile" class="w-full h-full object-cover">
+                </div>
+                <div class="flex-1">
+                    <h4 class="text-sm font-medium text-gray-800">John Smith</h4>
+                    <p class="text-xs text-gray-500">john.smith@example.com</p>
+                </div>
+                <button class="w-8 h-8 flex items-center justify-center text-gray-400 hover:text-primary">
+                    <i class="ri-logout-box-r-line"></i>
+                </button>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Mobile Menu -->
+    <div id="mobileMenu" class="fixed inset-0 bg-white z-50 transform translate-x-full transition-transform duration-300 ease-in-out">
+        <div class="container mx-auto px-4 py-6">
+            <div class="flex justify-between items-center mb-8">
+                <div class="flex items-center">
+                    <div class="w-10 h-10 bg-primary rounded-full flex items-center justify-center mr-3 pulse">
+                        <i class="ri-brain-line text-white text-xl"></i>
+                    </div>
+                    <h1 class="text-2xl font-['Pacifico'] text-primary">Learn Nexus</h1>
+                </div>
+                <button id="closeMobileMenu" class="w-10 h-10 flex items-center justify-center">
+                    <div class="hamburger open">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </button>
+            </div>
+            <ul id="mobileMenuItems" class="space-y-6 text-xl">
+                <li class="transform translate-x-10 opacity-0 transition-all duration-300" style="transition-delay: 0.1s">
+                    <a href="#" class="block py-2 text-gray-800 hover:text-primary transition-colors duration-300">Home</a>
+                </li>
+                <li class="transform translate-x-10 opacity-0 transition-all duration-300" style="transition-delay: 0.2s">
+                    <a href="#" class="block py-2 text-gray-800 hover:text-primary transition-colors duration-300">About Us</a>
+                </li>
+                <li class="transform translate-x-10 opacity-0 transition-all duration-300" style="transition-delay: 0.3s">
+                    <a href="#" class="block py-2 text-gray-800 hover:text-primary transition-colors duration-300">Courses</a>
+                </li>
+                <li class="transform translate-x-10 opacity-0 transition-all duration-300" style="transition-delay: 0.4s">
+                    <a href="#" class="block py-2 text-gray-800 hover:text-primary transition-colors duration-300">Resources</a>
+                </li>
+                <li class="transform translate-x-10 opacity-0 transition-all duration-300" style="transition-delay: 0.5s">
+                    <a href="#" class="block py-2 text-gray-800 hover:text-primary transition-colors duration-300">Contact</a>
+                </li>
+            </ul>
+            <div class="mt-8 flex flex-col space-y-4 transform translate-y-10 opacity-0 transition-all duration-300" style="transition-delay: 0.6s" id="mobileMenuButtons">
+                <a href="#" class="px-5 py-3 border border-primary text-primary font-medium rounded-button text-center hover:bg-primary hover:text-white transition-all duration-300">Log In</a>
+                <a href="#" class="px-5 py-3 bg-primary text-white font-medium rounded-button text-center shadow-md hover:shadow-lg transition-all duration-300">Sign Up</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="w-full bg-white shadow-sm fixed top-0 left-0 z-40">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="flex items-center">
+                <div class="w-10 h-10 bg-primary rounded-full flex items-center justify-center pulse mr-3">
+                    <i class="ri-brain-line text-white text-xl"></i>
+                </div>
+                <h1 class="text-2xl font-['Pacifico'] text-primary">Learn Nexus</h1>
+            </div>
+            <div class="hidden md:flex items-center space-x-8">
+                <a href="#" class="text-gray-700 hover:text-primary transition-colors duration-300 font-medium menu-item">Home</a>
+                <a href="#" class="text-gray-700 hover:text-primary transition-colors duration-300 font-medium menu-item">About Us</a>
+                <a href="#" class="text-gray-700 hover:text-primary transition-colors duration-300 font-medium menu-item">Courses</a>
+                <a href="#" class="text-gray-700 hover:text-primary transition-colors duration-300 font-medium menu-item">Resources</a>
+                <a href="#" class="text-gray-700 hover:text-primary transition-colors duration-300 font-medium menu-item">Contact</a>
+            </div>
+            <div class="flex items-center space-x-4">
+                <a href="#" class="px-5 py-2 border border-primary text-primary font-medium rounded-button hover:bg-primary hover:text-white transition-all duration-300 whitespace-nowrap">Log In</a>
+                <a href="#" class="px-5 py-2 bg-primary text-white font-medium rounded-button shadow-md hover:shadow-lg transition-all duration-300 btn-hover whitespace-nowrap">Sign Up</a>
+                <button id="toggleMobileMenu" class="md:hidden w-10 h-10 flex items-center justify-center">
+                    <div class="hamburger">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="pt-24 flex-1 md:ml-64">
+        <!-- Hero Section -->
+        <section class="w-full overflow-hidden">
+            <div class="container mx-auto px-4 py-16 md:py-24 flex flex-col md:flex-row items-center">
+                <div class="w-full md:w-1/2 pr-0 md:pr-10 mb-10 md:mb-0">
+                    <h1 class="text-4xl md:text-5xl font-bold text-gray-800 mb-6 typewriter">Collaborative Learning for Everyone</h1>
+                    <p class="text-lg text-gray-600 mb-8 fade-in delay-1">LearnNexus connects learners and educators in an interactive environment designed to enhance the learning experience through collaboration, resource sharing, and personalized education paths.</p>
+                    <div class="flex flex-wrap gap-4 fade-in delay-2">
+                        <button class="px-8 py-3 bg-primary text-white font-medium rounded-button shadow-lg hover:shadow-xl transition-all duration-300 btn-hover whitespace-nowrap !rounded-button">Get Started</button>
+                        <button class="px-8 py-3 border-2 border-primary text-primary font-medium rounded-button hover:bg-primary hover:text-white transition-all duration-300 whitespace-nowrap !rounded-button">Learn More</button>
+                    </div>
+                </div>
+                <div class="w-full md:w-1/2 relative fade-in delay-3">
+                    <div class="relative">
+                        <img src="https://readdy.ai/api/placeholder/600/500" alt="Collaborative Learning" class="w-full h-auto rounded-xl shadow-lg">
+                        <div class="absolute -top-8 -left-8 w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center float">
+                            <i class="ri-lightbulb-line text-primary text-2xl"></i>
+                        </div>
+                        <div class="absolute top-1/4 -right-6 w-14 h-14 bg-purple-100 rounded-full flex items-center justify-center float" style="animation-delay: 1s;">
+                            <i class="ri-chat-3-line text-secondary text-xl"></i>
+                        </div>
+                        <div class="absolute bottom-10 -left-10 w-20 h-20 bg-orange-100 rounded-full flex items-center justify-center float" style="animation-delay: 2s;">
+                            <i class="ri-book-open-line text-orange-500 text-2xl"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section class="py-16 bg-white">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Why Choose LearnNexus?</h2>
+                    <p class="text-lg text-gray-600 max-w-3xl mx-auto">Our platform offers a unique blend of features designed to transform the way you learn and teach.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="bg-white p-8 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
+                        <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-6">
+                            <i class="ri-team-line text-primary text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-3">Collaborative Learning</h3>
+                        <p class="text-gray-600">Work together with peers and instructors in real-time, sharing ideas and solving problems collectively.</p>
+                    </div>
+                    <div class="bg-white p-8 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
+                        <div class="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mb-6">
+                            <i class="ri-road-map-line text-secondary text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-3">Personalized Pathways</h3>
+                        <p class="text-gray-600">Follow customized learning paths tailored to your goals, pace, and learning style preferences.</p>
+                    </div>
+                    <div class="bg-white p-8 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
+                        <div class="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mb-6">
+                            <i class="ri-file-list-3-line text-orange-500 text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-3">Resource Sharing</h3>
+                        <p class="text-gray-600">Access and contribute to a growing library of educational resources, from documents to interactive media.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- How It Works -->
+        <section class="py-16 bg-gray-50">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">How LearnNexus Works</h2>
+                    <p class="text-lg text-gray-600 max-w-3xl mx-auto">Our simple process gets you connected and learning in no time.</p>
+                </div>
+                <div class="flex flex-col md:flex-row items-center justify-between">
+                    <div class="w-full md:w-1/2 mb-10 md:mb-0">
+                        <img src="https://readdy.ai/api/placeholder/600/400" alt="How LearnNexus Works" class="w-full h-auto rounded-xl shadow-lg">
+                    </div>
+                    <div class="w-full md:w-1/2 md:pl-16">
+                        <div class="mb-8">
+                            <div class="flex items-start">
+                                <div class="w-10 h-10 bg-primary rounded-full flex items-center justify-center mr-4 flex-shrink-0">
+                                    <span class="text-white font-bold">1</span>
+                                </div>
+                                <div>
+                                    <h3 class="text-xl font-bold text-gray-800 mb-2">Create Your Account</h3>
+                                    <p class="text-gray-600">Sign up in minutes and set up your personalized profile with your interests and learning goals.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-8">
+                            <div class="flex items-start">
+                                <div class="w-10 h-10 bg-primary rounded-full flex items-center justify-center mr-4 flex-shrink-0">
+                                    <span class="text-white font-bold">2</span>
+                                </div>
+                                <div>
+                                    <h3 class="text-xl font-bold text-gray-800 mb-2">Discover Content</h3>
+                                    <p class="text-gray-600">Browse our extensive library of courses, resources, and learning communities that match your interests.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-8">
+                            <div class="flex items-start">
+                                <div class="w-10 h-10 bg-primary rounded-full flex items-center justify-center mr-4 flex-shrink-0">
+                                    <span class="text-white font-bold">3</span>
+                                </div>
+                                <div>
+                                    <h3 class="text-xl font-bold text-gray-800 mb-2">Connect & Collaborate</h3>
+                                    <p class="text-gray-600">Join study groups, participate in discussions, and work together with peers and educators.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex items-start">
+                                <div class="w-10 h-10 bg-primary rounded-full flex items-center justify-center mr-4 flex-shrink-0">
+                                    <span class="text-white font-bold">4</span>
+                                </div>
+                                <div>
+                                    <h3 class="text-xl font-bold text-gray-800 mb-2">Track Your Progress</h3>
+                                    <p class="text-gray-600">Monitor your learning journey with detailed analytics and achievement milestones.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials -->
+        <section class="py-16 bg-white">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">What Our Users Say</h2>
+                    <p class="text-lg text-gray-600 max-w-3xl mx-auto">Join thousands of satisfied learners and educators who have transformed their educational experience.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="bg-gray-50 p-8 rounded-xl shadow-sm hover:shadow-md transition-all duration-300">
+                        <div class="flex items-center mb-4">
+                            <div class="text-yellow-400 flex">
+                                <i class="ri-star-fill"></i>
+                                <i class="ri-star-fill"></i>
+                                <i class="ri-star-fill"></i>
+                                <i class="ri-star-fill"></i>
+                                <i class="ri-star-fill"></i>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 mb-6">"LearnNexus has completely transformed how I approach my studies. The collaborative features make learning so much more engaging and effective."</p>
+                        <div class="flex items-center">
+                            <div class="w-12 h-12 bg-gray-300 rounded-full mr-4 overflow-hidden">
+                                <img src="https://readdy.ai/api/placeholder/100/100" alt="Student" class="w-full h-full object-cover">
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-gray-800">Emily Johnson</h4>
+                                <p class="text-gray-500 text-sm">Computer Science Student</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-gray-50 p-8 rounded-xl shadow-sm hover:shadow-md transition-all duration-300">
+                        <div class="flex items-center mb-4">
+                            <div class="text-yellow-400 flex">
+                                <i class="ri-star-fill"></i>
+                                <i class="ri-star-fill"></i>
+                                <i class="ri-star-fill"></i>
+                                <i class="ri-star-fill"></i>
+                                <i class="ri-star-fill"></i>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 mb-6">"As an educator, I've found LearnNexus to be an invaluable tool for engaging my students. The interactive features and resource sharing capabilities have enhanced my teaching methods."</p>
+                        <div class="flex items-center">
+                            <div class="w-12 h-12 bg-gray-300 rounded-full mr-4 overflow-hidden">
+                                <img src="https://readdy.ai/api/placeholder/100/100" alt="Teacher" class="w-full h-full object-cover">
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-gray-800">Michael Roberts</h4>
+                                <p class="text-gray-500 text-sm">High School Teacher</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-gray-50 p-8 rounded-xl shadow-sm hover:shadow-md transition-all duration-300">
+                        <div class="flex items-center mb-4">
+                            <div class="text-yellow-400 flex">
+                                <i class="ri-star-fill"></i>
+                                <i class="ri-star-fill"></i>
+                                <i class="ri-star-fill"></i>
+                                <i class="ri-star-fill"></i>
+                                <i class="ri-star-fill"></i>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 mb-6">"The personalized learning paths helped me acquire new skills at my own pace. The supportive community made all the difference when I faced challenges."</p>
+                        <div class="flex items-center">
+                            <div class="w-12 h-12 bg-gray-300 rounded-full mr-4 overflow-hidden">
+                                <img src="https://readdy.ai/api/placeholder/100/100" alt="Professional" class="w-full h-full object-cover">
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-gray-800">Sarah Chen</h4>
+                                <p class="text-gray-500 text-sm">UX Designer</p>
+                            </div>
+                        </div>
+                    </div>
+                                </div>
+                            </section>
+                    
+                            <!-- Pricing -->
+                            <section class="py-16 bg-gray-50">
+                                <div class="container mx-auto px-4">
+                                    <div class="text-center mb-16">
+                                        <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Simple, Transparent Pricing</h2>
+                                        <p class="text-lg text-gray-600 max-w-3xl mx-auto">Choose the plan that fits your learning needs.</p>
+                                    </div>
+                                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                                        <div class="bg-white p-8 rounded-xl shadow-md hover:shadow-lg transition-all duration-300">
+                                            <div class="text-center mb-6">
+                                                <h3 class="text-xl font-bold text-gray-800 mb-2">Basic</h3>
+                                                <div class="text-3xl font-bold text-primary mb-2">Free</div>
+                                                <p class="text-gray-500">Perfect for casual learners</p>
+                                            </div>
+                                            <ul class="space-y-3 mb-8">
+                                                <li class="flex items-center text-gray-600">
+                                                    <i class="ri-checkbox-circle-line text-green-500 mr-2"></i>
+                                                    <span>Access to public courses</span>
+                                                </li>
+                                                <li class="flex items-center text-gray-600">
+                                                    <i class="ri-checkbox-circle-line text-green-500 mr-2"></i>
+                                                    <span>Join public study groups</span>
+                                                </li>
+                                                <li class="flex items-center text-gray-600">
+                                                    <i class="ri-checkbox-circle-line text-green-500 mr-2"></i>
+                                                    <span>Basic progress tracking</span>
+                                                </li>
+                                                <li class="flex items-center text-gray-400">
+                                                    <i class="ri-close-circle-line text-red-400 mr-2"></i>
+                                                    <span>Limited resource access</span>
+                                                </li>
+                                                <li class="flex items-center text-gray-400">
+                                                    <i class="ri-close-circle-line text-red-400 mr-2"></i>
+                                                    <span>No private groups</span>
+                                                </li>
+                                            </ul>
+                                            <button class="w-full py-3 border-2 border-primary text-primary font-medium rounded-button hover:bg-primary hover:text-white transition-all duration-300">Get Started</button>
+                                        </div>
+                                        <div class="bg-primary bg-opacity-5 border-2 border-primary p-8 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 transform scale-105">
+                                            <div class="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-secondary text-white px-4 py-1 rounded-full text-sm font-medium">Popular</div>
+                                            <div class="text-center mb-6">
+                                                <h3 class="text-xl font-bold text-gray-800 mb-2">Pro</h3>
+                                                <div class="text-3xl font-bold text-primary mb-2">$9.99 <span class="text-base font-normal text-gray-500">/month</span></div>
+                                                <p class="text-gray-500">For dedicated students</p>
+                                            </div>
+                                            <ul class="space-y-3 mb-8">
+                                                <li class="flex items-center text-gray-600">
+                                                    <i class="ri-checkbox-circle-line text-green-500 mr-2"></i>
+                                                    <span>All Basic features</span>
+                                                </li>
+                                                <li class="flex items-center text-gray-600">
+                                                    <i class="ri-checkbox-circle-line text-green-500 mr-2"></i>
+                                                    <span>Full resource library access</span>
+                                                </li>
+                                                <li class="flex items-center text-gray-600">
+                                                    <i class="ri-checkbox-circle-line text-green-500 mr-2"></i>
+                                                    <span>Create private study groups</span>
+                                                </li>
+                                                <li class="flex items-center text-gray-600">
+                                                    <i class="ri-checkbox-circle-line text-green-500 mr-2"></i>
+                                                    <span>Advanced progress analytics</span>
+                                                </li>
+                                                <li class="flex items-center text-gray-400">
+                                                    <i class="ri-close-circle-line text-red-400 mr-2"></i>
+                                                    <span>No priority support</span>
+                                                </li>
+                                            </ul>
+                                            <button class="w-full py-3 bg-primary text-white font-medium rounded-button shadow-md hover:shadow-lg transition-all duration-300 btn-hover">Choose Plan</button>
+                                        </div>
+                                        <div class="bg-white p-8 rounded-xl shadow-md hover:shadow-lg transition-all duration-300">
+                                            <div class="text-center mb-6">
+                                                <h3 class="text-xl font-bold text-gray-800 mb-2">Premium</h3>
+                                                <div class="text-3xl font-bold text-primary mb-2">$19.99 <span class="text-base font-normal text-gray-500">/month</span></div>
+                                                <p class="text-gray-500">For professionals & educators</p>
+                                            </div>
+                                            <ul class="space-y-3 mb-8">
+                                                <li class="flex items-center text-gray-600">
+                                                    <i class="ri-checkbox-circle-line text-green-500 mr-2"></i>
+                                                    <span>All Pro features</span>
+                                                </li>
+                                                <li class="flex items-center text-gray-600">
+                                                    <i class="ri-checkbox-circle-line text-green-500 mr-2"></i>
+                                                    <span>Create custom courses</span>
+                                                </li>
+                                                <li class="flex items-center text-gray-600">
+                                                    <i class="ri-checkbox-circle-line text-green-500 mr-2"></i>
+                                                    <span>Priority support</span>
+                                                </li>
+                                                <li class="flex items-center text-gray-600">
+                                                    <i class="ri-checkbox-circle-line text-green-500 mr-2"></i>
+                                                    <span>Content creation tools</span>
+                                                </li>
+                                                <li class="flex items-center text-gray-600">
+                                                    <i class="ri-checkbox-circle-line text-green-500 mr-2"></i>
+                                                    <span>API access</span>
+                                                </li>
+                                            </ul>
+                                            <button class="w-full py-3 border-2 border-primary text-primary font-medium rounded-button hover:bg-primary hover:text-white transition-all duration-300">Choose Plan</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                    
+                            <!-- CTA -->
+                            <section class="py-16 bg-gradient-to-r from-primary to-secondary text-white">
+                                <div class="container mx-auto px-4 text-center">
+                                    <h2 class="text-3xl md:text-4xl font-bold mb-6">Ready to Transform Your Learning Experience?</h2>
+                                    <p class="text-xl text-white text-opacity-90 mb-8 max-w-3xl mx-auto">Join thousands of learners and educators on LearnNexus today and discover the power of collaborative education.</p>
+                                    <div class="flex flex-col md:flex-row justify-center space-y-4 md:space-y-0 md:space-x-6">
+                                        <button class="px-8 py-3 bg-white text-primary font-medium rounded-button shadow-lg hover:shadow-xl transition-all duration-300 btn-hover">Get Started Now</button>
+                                        <button class="px-8 py-3 border-2 border-white text-white font-medium rounded-button hover:bg-white hover:text-primary transition-all duration-300">Schedule a Demo</button>
+                                    </div>
+                                </div>
+                            </section>
+                    
+                            <!-- Footer -->
+                            <footer class="bg-gray-800 text-white pt-16 pb-8">
+                                <div class="container mx-auto px-4">
+                                    <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
+                                        <div>
+                                            <div class="flex items-center mb-6">
+                                                <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center mr-3">
+                                                    <i class="ri-brain-line text-primary text-xl"></i>
+                                                </div>
+                                                <h2 class="text-2xl font-['Pacifico'] text-white">Learn Nexus</h2>
+                                            </div>
+                                            <p class="text-gray-400 mb-6">Transforming education through collaboration and personalized learning experiences.</p>
+                                            <div class="flex space-x-4">
+                                                <a href="#" class="w-10 h-10 bg-gray-700 rounded-full flex items-center justify-center hover:bg-primary transition-colors duration-300">
+                                                    <i class="ri-facebook-fill"></i>
+                                                </a>
+                                                <a href="#" class="w-10 h-10 bg-gray-700 rounded-full flex items-center justify-center hover:bg-primary transition-colors duration-300">
+                                                    <i class="ri-twitter-x-fill"></i>
+                                                </a>
+                                                <a href="#" class="w-10 h-10 bg-gray-700 rounded-full flex items-center justify-center hover:bg-primary transition-colors duration-300">
+                                                    <i class="ri-linkedin-fill"></i>
+                                                </a>
+                                                <a href="#" class="w-10 h-10 bg-gray-700 rounded-full flex items-center justify-center hover:bg-primary transition-colors duration-300">
+                                                    <i class="ri-instagram-line"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <h3 class="text-xl font-bold mb-6">Quick Links</h3>
+                                            <ul class="space-y-3">
+                                                <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Home</a></li>
+                                                <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">About Us</a></li>
+                                                <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Courses</a></li>
+                                                <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Resources</a></li>
+                                                <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Contact</a></li>
+                                            </ul>
+                                        </div>
+                                        <div>
+                                            <h3 class="text-xl font-bold mb-6">Resources</h3>
+                                            <ul class="space-y-3">
+                                                <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Blog</a></li>
+                                                <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Tutorials</a></li>
+                                                <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Documentation</a></li>
+                                                <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Community</a></li>
+                                                <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">FAQs</a></li>
+                                            </ul>
+                                        </div>
+                                        <div>
+                                            <h3 class="text-xl font-bold mb-6">Newsletter</h3>
+                                            <p class="text-gray-400 mb-4">Subscribe to our newsletter for updates and learning tips.</p>
+                                            <form>
+                                                <div class="flex">
+                                                    <input type="email" placeholder="Your email" class="bg-gray-700 text-white px-4 py-3 rounded-l-button focus:outline-none w-full">
+                                                    <button class="bg-primary px-4 py-3 rounded-r-button hover:bg-blue-600 transition-colors duration-300">
+                                                        <i class="ri-send-plane-fill"></i>
+                                                    </button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <div class="border-t border-gray-700 pt-8">
+                                        <div class="flex flex-col md:flex-row justify-between items-center">
+                                            <p class="text-gray-400 text-sm">&copy; 2025 LearnNexus. All rights reserved.</p>
+                                            <div class="flex space-x-6 mt-4 md:mt-0">
+                                                <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300 text-sm">Privacy Policy</a>
+                                                <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300 text-sm">Terms of Service</a>
+                                                <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300 text-sm">Cookie Policy</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </footer>
+                        </main>
+                    
+                        <script>
+                            // Mobile menu functionality
+                            const toggleMobileMenu = document.getElementById('toggleMobileMenu');
+                            const closeMobileMenu = document.getElementById('closeMobileMenu');
+                            const mobileMenu = document.getElementById('mobileMenu');
+                            const mobileMenuItems = document.getElementById('mobileMenuItems').children;
+                            const mobileMenuButtons = document.getElementById('mobileMenuButtons');
+                            
+                            function openMobileMenu() {
+                                mobileMenu.classList.remove('translate-x-full');
+                                mobileMenu.classList.add('translate-x-0');
+                                setTimeout(() => {
+                                    Array.from(mobileMenuItems).forEach(item => {
+                                        item.classList.remove('translate-x-10', 'opacity-0');
+                                    });
+                                    mobileMenuButtons.classList.remove('translate-y-10', 'opacity-0');
+                                }, 300);
+                            }
+                            
+                            function closeMobileMenuFunc() {
+                                Array.from(mobileMenuItems).forEach(item => {
+                                    item.classList.add('translate-x-10', 'opacity-0');
+                                });
+                                mobileMenuButtons.classList.add('translate-y-10', 'opacity-0');
+                                setTimeout(() => {
+                                    mobileMenu.classList.remove('translate-x-0');
+                                    mobileMenu.classList.add('translate-x-full');
+                                }, 300);
+                            }
+                            
+                            toggleMobileMenu.addEventListener('click', openMobileMenu);
+                            closeMobileMenu.addEventListener('click', closeMobileMenuFunc);
+                            
+                            // Sidebar functionality
+                            const sidebarOverlay = document.getElementById('sidebarOverlay');
+                            const sidebar = document.getElementById('sidebar');
+                            
+                            function toggleSidebar() {
+                                if (sidebar.classList.contains('-translate-x-full')) {
+                                    // Open sidebar
+                                    sidebar.classList.remove('-translate-x-full');
+                                    sidebar.classList.add('translate-x-0');
+                                    sidebarOverlay.classList.remove('hidden');
+                                    setTimeout(() => {
+                                        sidebarOverlay.classList.remove('opacity-0');
+                                    }, 50);
+                                } else {
+                                    // Close sidebar
+                                    sidebar.classList.remove('translate-x-0');
+                                    sidebar.classList.add('-translate-x-full');
+                                    sidebarOverlay.classList.add('opacity-0');
+                                    setTimeout(() => {
+                                        sidebarOverlay.classList.add('hidden');
+                                    }, 300);
+                                }
+                            }
+                            
+                            // Add scroll animations
+                            document.addEventListener('DOMContentLoaded', function() {
+                                const fadeElements = document.querySelectorAll('.fade-in');
+                                
+                                const observer = new IntersectionObserver((entries) => {
+                                    entries.forEach(entry => {
+                                        if (entry.isIntersecting) {
+                                            entry.target.style.opacity = '1';
+                                            entry.target.style.transform = 'translateY(0)';
+                                            observer.unobserve(entry.target);
+                                        }
+                                    });
+                                }, {
+                                    threshold: 0.1
+                                });
+                                
+                                fadeElements.forEach(element => {
+                                    observer.observe(element);
+                                });
+                            });
+                        </script>
+                    </body>
+                    </html>

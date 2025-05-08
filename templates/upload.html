@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Upload & Download Portal</title>
+    <style>
+        :root {
+            --primary: #4361ee;
+            --secondary: #3f37c9;
+            --success: #4cc9f0;
+            --light: #f8f9fa;
+            --dark: #212529;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background-color: #f0f2f5;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+        
+        .upload-section, .files-section {
+            background-color: white;
+            border-radius: 8px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .upload-form {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 20px;
+        }
+        
+        .upload-preview {
+            grid-column: 1;
+            text-align: center;
+        }
+        
+        .upload-fields {
+            grid-column: 2;
+        }
+        
+        .preview-container {
+            width: 220px;
+            height: 220px;
+            margin: 0 auto;
+            border: 2px dashed #ccc;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background-color: #f8f9fa;
+        }
+        
+        .preview-image {
+            max-width: 100%;
+            max-height: 100%;
+            display: none;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+        
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        
+        .file-input-container {
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+        }
+        
+        .file-input-button {
+            background-color: var(--primary);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            display: inline-block;
+            font-weight: 500;
+        }
+        
+        .file-input {
+            position: absolute;
+            font-size: 100px;
+            opacity: 0;
+            right: 0;
+            top: 0;
+            cursor: pointer;
+        }
+        
+        .btn {
+            padding: 12px 24px;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .btn:hover {
+            background-color: var(--secondary);
+        }
+        
+        .files-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 20px;
+        }
+        
+        .file-card {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .file-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .file-thumbnail {
+            height: 160px;
+            background-color: #f8f9fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        
+        .file-thumbnail img {
+            max-width: 100%;
+            max-height: 100%;
+        }
+        
+        .file-info {
+            padding: 15px;
+        }
+        
+        .file-title {
+            font-weight: 600;
+            margin: 0 0 5px 0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .file-meta {
+            color: #666;
+            font-size: 14px;
+            margin: 0 0 15px 0;
+        }
+        
+        .file-actions {
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .file-btn {
+            padding: 8px 12px;
+            background-color: var(--success);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            flex: 1;
+            text-align: center;
+            margin: 0 5px;
+        }
+        
+        .file-btn:hover {
+            opacity: 0.9;
+        }
+        
+        .message {
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+            display: none;
+        }
+        
+        .success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        
+        @media (max-width: 768px) {
+            .upload-form {
+                grid-template-columns: 1fr;
+            }
+            
+            .upload-preview, .upload-fields {
+                grid-column: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>File Upload & Download Portal</h1>
+            <p>Upload, manage, and download files easily</p>
+        </header>
+        
+        <div class="upload-section">
+            <h2>Upload New File</h2>
+            <div id="uploadMessage" class="message success"></div>
+            
+            <form id="uploadForm" class="upload-form" action="/upload_file" method="POST" enctype="multipart/form-data">
+                <div class="upload-preview">
+                    <label>Cover Preview</label>
+                    <div class="preview-container">
+                        <img id="previewImage" class="preview-image" src="/api/placeholder/220/220" alt="Cover preview">
+                        <span id="previewPlaceholder">Cover preview will appear here</span>
+                    </div>
+                    <div class="form-group" style="margin-top: 15px;">
+                        <div class="file-input-container">
+                            <div class="file-input-button">Choose Cover Image</div>
+                            <input type="file" id="coverInput" name="coverInput" class="file-input" accept="image/*">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="upload-fields">
+                    <div class="form-group">
+                        <label for="fileInput">Select File to Upload</label>
+                        <div class="file-input-container" style="display: block;">
+                            <div class="file-input-button">Browse Files</div>
+                            <input type="file" id="fileInput" name="fileInput" class="file-input">
+                        </div>
+                        <p id="selectedFileName" style="margin-top: 5px; color: #666;"></p>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="fileName">File Name</label>
+                        <input type="text" id="fileName" name="fileName" placeholder="Enter file name">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="hostedBy">Hosted By</label>
+                        <input type="text" id="hostedBy" name="hostedBy" placeholder="Enter host name">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="fileDescription">Description (Optional)</label>
+                        <textarea id="fileDescription" name="fileDescription" rows="3" placeholder="Enter file description"></textarea>
+                    </div>
+                    
+                    <button type="submit" class="btn">Upload File</button>
+                </div>
+            </form>
+        </div>
+        
+        <div class="files-section">
+            <h2>Available Files</h2>
+            <div class="files-grid" id="filesGrid">
+                <!-- Sample files for demonstration -->
+                <div class="file-card">
+                    <div class="file-thumbnail">
+                        <img src="/api/placeholder/240/160" alt="Document Cover">
+                    </div>
+                    <div class="file-info">
+                        <h3 class="file-title">Project Report Q1</h3>
+                        <p class="file-meta">Hosted by: John Smith</p>
+                        <div class="file-actions">
+                            <a href="#" class="file-btn">Download</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="file-card">
+                    <div class="file-thumbnail">
+                        <img src="/api/placeholder/240/160" alt="Presentation Cover">
+                    </div>
+                    <div class="file-info">
+                        <h3 class="file-title">Marketing Presentation</h3>
+                        <p class="file-meta">Hosted by: Sarah Johnson</p>
+                        <div class="file-actions">
+                            <a href="#" class="file-btn">Download</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="file-card">
+                    <div class="file-thumbnail">
+                        <img src="/api/placeholder/240/160" alt="Image Cover">
+                    </div>
+                    <div class="file-info">
+                        <h3 class="file-title">Design Assets Pack</h3>
+                        <p class="file-meta">Hosted by: Mike Brown</p>
+                        <div class="file-actions">
+                            <a href="#" class="file-btn">Download</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="files-section">
+                    <h2>Available Files</h2>
+                    <div class="files-grid" id="filesGrid">
+                        <!-- Files will be loaded dynamically -->
+                    </div>
+                </div>
+                
+                <div class="file-card">
+                    <div class="file-thumbnail">
+                        <img src="/api/placeholder/240/160" alt="Video Cover">
+                    </div>
+                    <div class="file-info">
+                        <h3 class="file-title">Product Demo Video</h3>
+                        <p class="file-meta">Hosted by: Emma Wilson</p>
+                        <div class="file-actions">
+                            <a href="#" class="file-btn">Download</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Preview cover image when selected
+        // Handle form submission
+document.getElementById('uploadForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const formData = new FormData(this);
+    
+    // Validation
+    const fileName = document.getElementById('fileName').value;
+    const hostedBy = document.getElementById('hostedBy').value;
+    const fileInput = document.getElementById('fileInput');
+    
+    if (!fileName || !hostedBy || !fileInput.files[0]) {
+        alert('Please fill all required fields and select a file to upload.');
+        return;
+    }
+    
+    // Show loading state
+    const submitButton = this.querySelector('button[type="submit"]');
+    const originalText = submitButton.textContent;
+    submitButton.textContent = 'Uploading...';
+    submitButton.disabled = true;
+    
+    fetch('/upload_file', {
+        method: 'POST',
+        body: formData,
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            // Show success message
+            const message = document.getElementById('uploadMessage');
+            message.textContent = data.message;
+            message.style.display = 'block';
+            
+            // Add new file card to the grid (optional - or you could reload the page)
+            const newFileCard = createFileCard(
+                document.getElementById('previewImage').src,
+                data.file_name,
+                data.hosted_by,
+                data.file_id
+            );
+            
+            const filesGrid = document.getElementById('filesGrid');
+            if (filesGrid) {
+                filesGrid.prepend(newFileCard);
+            }
+            
+            // Reset form
+            setTimeout(() => {
+                document.getElementById('uploadForm').reset();
+                document.getElementById('previewImage').style.display = 'none';
+                document.getElementById('previewPlaceholder').style.display = 'block';
+                document.getElementById('selectedFileName').textContent = '';
+                message.style.display = 'none';
+            }, 3000);
+        } else {
+            alert('Error: ' + (data.error || 'Unknown error'));
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Upload failed. Please try again.');
+    })
+    .finally(() => {
+        // Reset button state
+        submitButton.textContent = originalText;
+        submitButton.disabled = false;
+    });
+});
+
+// Create a new file card element with download link
+function createFileCard(coverSrc, fileName, hostedBy, fileId) {
+    const card = document.createElement('div');
+    card.className = 'file-card';
+    
+    card.innerHTML = `
+        <div class="file-thumbnail">
+            <img src="${coverSrc}" alt="${fileName} Cover">
+        </div>
+        <div class="file-info">
+            <h3 class="file-title">${fileName}</h3>
+            <p class="file-meta">Hosted by: ${hostedBy}</p>
+            <div class="file-actions">
+                <a href="/download/${fileId}" class="file-btn">Download</a>
+            </div>
+        </div>
+    `;
+    
+    return card;
+}
+
+  // Function to load files when the page loads
+  document.addEventListener('DOMContentLoaded', function() {
+    loadFiles();
+});
+
+// Function to fetch and display files
+function loadFiles() {
+    fetch('/get_files')
+        .then(response => response.json())
+        .then(data => {
+            if (data.files && data.files.length > 0) {
+                const filesGrid = document.getElementById('filesGrid');
+                filesGrid.innerHTML = ''; // Clear existing content
+                
+                data.files.forEach(file => {
+                    const coverSrc = file.cover_image || '/api/placeholder/240/160';
+                    const fileCard = createFileCard(coverSrc, file.filename, file.hosted_by, file.id);
+                    filesGrid.appendChild(fileCard);
+                });
+            } else {
+                document.getElementById('filesGrid').innerHTML = '<p>No files available</p>';
+            }
+        })
+        .catch(error => {
+            console.error('Error loading files:', error);
+            document.getElementById('filesGrid').innerHTML = '<p>Error loading files. Please try again later.</p>';
+        });
+}
+    </script>
+</body>
+</html>
